@@ -1,0 +1,13 @@
+<%= form_with(model: [ @document, @document.notes.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :left %><br>
+    <%= form.text_field :left %>
+  </p>
+  <p>
+    <%= form.label :right %><br>
+    <%= form.text_area :right %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
