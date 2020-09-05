@@ -26,5 +26,5 @@ production:
   database: knoweth
   host: postgresql
   pool: 5
-  username: <%= Rails.application.credentials.production[:postgres_username] %>
-  password: <%= Rails.application.credentials.production[:postgres_password] %>
+  username: <%= Rails.application.credentials[:postgres_username] %>
+  password: <%= Rails.application.credentials[:postgres_password] %>
