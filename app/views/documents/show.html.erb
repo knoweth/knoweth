@@ -10,3 +10,5 @@
 <% end %>
 
 <%= render 'notes/form' %>
+<% # load js for the editor %>
+<%= javascript_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>
