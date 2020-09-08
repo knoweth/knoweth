@@ -9,6 +9,8 @@
                data: { confirm: 'Are you sure?'} %></p>
 <% end %>
 
+<div id="document-editor"></div>
+
 <%= render 'notes/form' %>
 <% # load js for the editor %>
 <%= javascript_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>
