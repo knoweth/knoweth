@@ -158,6 +158,10 @@ export default () => {
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={(event) => {
+          if (event.key === "Tab") {
+            console.log("tab-u");
+            Transforms.move(editor, { distance: 1, unit: "offset" });
+          }
           if (!event.ctrlKey) {
             return;
           }
