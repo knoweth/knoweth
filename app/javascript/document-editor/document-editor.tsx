@@ -16,6 +16,7 @@ import {
 } from "slate-react";
 import { withHistory } from "slate-history";
 import styled from "styled-components";
+import { generateCardId } from "./card-id";
 
 // Define our own custom set of helpers.
 const CustomEditor = {
@@ -92,7 +93,28 @@ const HoveringToolbar = () => {
     <Portal>
       <StyledToolbar ref={ref}>
         <p>
-          <button>Create flashcard</button>
+          <button
+            onClick={() => {
+              const currentLoc = editor.selection.anchor.path;
+              let node: Node = editor;
+              // Traverse the tree until we find a q-note to enable flashcards.
+              for (let i = 0; i < currentLoc.length; i++) {
+                const path = currentLoc.slice(0, i + 1);
+                node = node.children[currentLoc[i]];
+
+                // If we find a note, set the data to include its card ID
+                if (node.type === "q-note") {
+                  Transforms.setNodes(
+                    editor,
+                    { cardId: generateCardId() },
+                    { at: path }
+                  );
+                }
+              }
+            }}
+          >
+            Create flashcard
+          </button>
         </p>
       </StyledToolbar>
     </Portal>
@@ -127,9 +149,9 @@ const Element = ({ attributes, children, element }: RenderElementProps) => {
       return <h6 {...attributes}>{children}</h6>;
     case "q-table":
       return (
-        <>
+        <div {...attributes}>
           <ReviewTable className="table">
-            <tbody {...attributes}>
+            <tbody>
               <tr contentEditable={false}>
                 <th>Question</th>
                 <th>Answer</th>
@@ -169,10 +191,14 @@ const Element = ({ attributes, children, element }: RenderElementProps) => {
               +
             </button>
           </div>
-        </>
+        </div>
       );
     case "q-note":
-      return <tr {...attributes}>{children}</tr>;
+      return (
+        <tr className={(element as any).cardId ? "q-card" : ""} {...attributes}>
+          {children}
+        </tr>
+      );
     case "q-cell":
       return <td {...attributes}>{children}</td>;
     default:
@@ -237,6 +263,11 @@ export default () => {
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={(event) => {
+          if (event.key === "Delete") {
+            console.log("deletage");
+            console.log(editor.selection);
+            Transforms.delete(editor, { at: editor.selection });
+          }
           if (event.key === "Tab") {
             Transforms.move(editor, { distance: 1, unit: "offset" });
           }
