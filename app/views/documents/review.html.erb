@@ -1,2 +1,4 @@
-<h1>Review Mode</h1>
-<%= @document.title %>
+<h1>Reviewing: <%= @document.title %></h1>
+
+<article id="document-reviewer"></article>
+<%= javascript_pack_tag 'document-reviewer', 'data-turbolinks-track': 'reload' %>
