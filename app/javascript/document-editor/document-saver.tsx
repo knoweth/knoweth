@@ -14,37 +14,52 @@ export default function DocumentSaver({ state }: { state: any }) {
   );
 
   const updateState = useCallback(
-    asyncThrottle(async (newState) => {
-      setSyncStatus("syncing");
-      try {
-        await fetch(location.href, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": csrfToken,
-          },
-          body: JSON.stringify({
-            document: { content: JSON.stringify(newState) },
-          }),
-        }).then((res) => {
-          if (!res.ok) {
-            throw new Error("nak");
+    asyncThrottle(
+      async ({
+        newState,
+        abortController,
+      }: {
+        newState: any;
+        abortController: AbortController;
+      }) => {
+        setSyncStatus("syncing");
+        try {
+          await fetch(location.href, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": csrfToken,
+            },
+            body: JSON.stringify({
+              document: { content: JSON.stringify(newState) },
+            }),
+            signal: abortController.signal,
+          }).then((res) => {
+            if (!res.ok) {
+              throw new Error("nak");
+            }
+          });
+          setSyncStatus("synced");
+        } catch (e) {
+          if (abortController.signal.aborted) {
+            // we aborted, do nothing
+            return;
           }
-        });
-        setSyncStatus("synced");
-      } catch (e) {
-        setSyncStatus("error");
-      }
+          setSyncStatus("error");
+        }
 
-      // Minimum 1 s between runs
-      await asyncSleep(1000);
-    }),
+        // Minimum 1 s between runs
+        await asyncSleep(1000);
+      }
+    ),
     []
   );
 
   useEffect(() => {
     console.log("Updating state:", state);
-    updateState(state);
+    const abortController = new AbortController();
+    updateState({ newState: state, abortController });
+    return () => abortController.abort();
   }, [updateState, state]);
 
   switch (syncStatus) {
