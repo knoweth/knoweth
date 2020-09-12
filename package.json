@@ -2,10 +2,13 @@
   "name": "knoweth",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "4.3.0",
+    "@rails/webpacker": "5.2.1",
     "@types/lodash": "^4.14.161",
     "@types/moment": "^2.13.0",
     "@types/react": "^16.9.49",
@@ -23,7 +26,6 @@
     "slate-history": "^0.58.4",
     "slate-react": "^0.58.4",
     "styled-components": "^5.2.0",
-    "ts-loader": "^8.0.3",
     "turbolinks": "^5.2.0",
     "typescript": "^4.0.2",
     "uuid": "^8.3.0"

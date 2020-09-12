@@ -2,6 +2,9 @@ import { Node } from "slate";
 import { createUnreviewedKnowledge } from "algorithm/anki";
 import Knowledge from "data/knowledge";
 
+/**
+ * A flashcard to review
+ */
 export type Card = {
   cardId: string;
   left: string;
