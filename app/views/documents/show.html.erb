@@ -1,16 +1,5 @@
 <p><strong>Title: </strong> <%= @document.title %></p>
 
-<% @document.notes.each do |note| %>
-<p><%= note.left %></p>
-<p><%= note.right %></p>
-<p><%= link_to 'Destroy Note',
-               [note.document, note],
-               method: :delete,
-               data: { confirm: 'Are you sure?'} %></p>
-<% end %>
-
+<% # editor configuration %>
 <div id="document-editor"></div>
-
-<%= render 'notes/form' %>
-<% # load js for the editor %>
 <%= javascript_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>

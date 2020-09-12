@@ -1,0 +1,51 @@
+import React, { useCallback, useEffect, useState } from "react";
+import asyncSleep from "util/async-sleep";
+import asyncThrottle from "util/async-throttle";
+
+// Must grab CSRF token to get past Rails's integrity protection (which is
+// probably good to keep enabled!)
+const csrfToken = document
+  .querySelector("meta[name=csrf-token]")
+  .getAttribute("content");
+
+export default function DocumentSaver({ state }: { state: any }) {
+  const [syncStatus, setSyncStatus] = useState<"synced" | "syncing" | "error">(
+    "synced"
+  );
+
+  const updateState = useCallback(
+    asyncThrottle(async (newState) => {
+      setSyncStatus("syncing");
+      try {
+        await fetch(location.href, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+          },
+          body: JSON.stringify({
+            document: { content: JSON.stringify(newState) },
+          }),
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error("nak");
+          }
+        });
+        setSyncStatus("synced");
+      } catch (e) {
+        setSyncStatus("error");
+      }
+      
+      // Minimum 1 s between runs
+      await asyncSleep(1000);
+    }),
+    []
+  );
+
+  useEffect(() => {
+    console.log("Updating state:", state);
+    updateState(state);
+  }, [updateState, state]);
+
+  return <>{syncStatus}</>;
+}

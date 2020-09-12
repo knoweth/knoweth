@@ -17,6 +17,7 @@ import {
 import { withHistory } from "slate-history";
 import styled from "styled-components";
 import { generateCardId } from "./card-id";
+import DocumentSaver from "./document-saver";
 
 // Define our own custom set of helpers.
 const CustomEditor = {
@@ -195,7 +196,10 @@ const Element = ({ attributes, children, element }: RenderElementProps) => {
       );
     case "q-note":
       return (
-        <tr className={(element as any).cardId ? "q-card" : ""} {...attributes}>
+        <tr
+          className={(element as any).cardId ? "table-warning" : ""}
+          {...attributes}
+        >
           {children}
         </tr>
       );
@@ -251,50 +255,53 @@ export default () => {
   ]);
 
   return (
-    <Slate
-      editor={editor}
-      value={value}
-      onChange={(newValue) => {
-        setValue(newValue);
-      }}
-    >
-      <HoveringToolbar />
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        onKeyDown={(event) => {
-          if (event.key === "Delete") {
-            console.log("deletage");
-            console.log(editor.selection);
-            Transforms.delete(editor, { at: editor.selection });
-          }
-          if (event.key === "Tab") {
-            Transforms.move(editor, { distance: 1, unit: "offset" });
-          }
-          if (!event.ctrlKey) {
-            return;
-          }
-
-          switch (event.key) {
-            // Bold
-            case "b": {
-              event.preventDefault();
-              CustomEditor.toggleBoldMark(editor);
-              break;
-            }
-            // Undo
-            case "z": {
-              event.preventDefault();
-              editor.undo();
-            }
-            // Redo
-            case "y": {
-              event.preventDefault();
-              editor.redo();
-            }
-          }
+    <>
+      <DocumentSaver state={value} />
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
         }}
-      />
-    </Slate>
+      >
+        <HoveringToolbar />
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={(event) => {
+            if (event.key === "Delete") {
+              console.log("deletage");
+              console.log(editor.selection);
+              Transforms.delete(editor, { at: editor.selection });
+            }
+            if (event.key === "Tab") {
+              Transforms.move(editor, { distance: 1, unit: "offset" });
+            }
+            if (!event.ctrlKey) {
+              return;
+            }
+
+            switch (event.key) {
+              // Bold
+              case "b": {
+                event.preventDefault();
+                CustomEditor.toggleBoldMark(editor);
+                break;
+              }
+              // Undo
+              case "z": {
+                event.preventDefault();
+                editor.undo();
+              }
+              // Redo
+              case "y": {
+                event.preventDefault();
+                editor.redo();
+              }
+            }
+          }}
+        />
+      </Slate>
+    </>
   );
 };
