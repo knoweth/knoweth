@@ -1,27 +1,94 @@
-import { createUnreviewedKnowledge } from "algorithm/anki";
+import ReviewQuality from "algorithm/review-quality";
 import Knowledge from "data/knowledge";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Node } from "slate";
+import parseDocument, { Card } from "./card-parser";
 
-function generateInitialKnowledge(content: Node[]) {
-  // Hello, breadth-first search.
-  const knowledgeMap = new Map<string, Knowledge>();
-  const queue: Node[] = [];
-  queue.push(...content);
+function CardRenderer({
+  currentCard,
+  onFeedback,
+}: {
+  currentCard: Card;
+  onFeedback: (quality: ReviewQuality) => void;
+}) {
+  const [answerShown, setAnswerShown] = useState(false);
 
-  while (queue.length !== 0) {
-    const cur = queue.shift();
-    const cardId: string | undefined = (cur as any).cardId;
-    if (cardId !== undefined) {
-      knowledgeMap.set(cardId, createUnreviewedKnowledge());
+  useEffect(() => {
+    function handler(e: KeyboardEvent) {
+      if (e.key === " ") {
+        setAnswerShown(true);
+      } else if (answerShown) {
+        switch (e.key) {
+          case "1":
+            onFeedback(ReviewQuality.AGAIN);
+            break;
+          case "2":
+            onFeedback(ReviewQuality.HARD);
+            break;
+          case "3":
+            onFeedback(ReviewQuality.GOOD);
+            break;
+          case "4":
+            onFeedback(ReviewQuality.EASY);
+            break;
+        }
+      }
     }
 
-    if (cur.children !== undefined) {
-      queue.push(...(cur.children as Node[]));
-    }
-  }
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [answerShown]);
 
-  return knowledgeMap;
+  return (
+    <div className="card">
+      <div className="card-body text-center">
+        <p>{currentCard.left}</p>
+
+        {!answerShown && (
+          <p>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setAnswerShown(true)}
+            >
+              Show Answer
+            </button>
+          </p>
+        )}
+        {answerShown && (
+          <>
+            <hr />
+            <p>{currentCard.right}</p>
+            <div className="btn-group">
+              <button
+                className="btn btn-danger"
+                onClick={() => onFeedback(ReviewQuality.AGAIN)}
+              >
+                Again
+              </button>
+              <button
+                className="btn btn-warning"
+                onClick={() => onFeedback(ReviewQuality.HARD)}
+              >
+                Hard
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => onFeedback(ReviewQuality.GOOD)}
+              >
+                Good
+              </button>
+              <button
+                className="btn btn-success"
+                onClick={() => onFeedback(ReviewQuality.EASY)}
+              >
+                Easy
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function DocumentReviewer({
@@ -31,6 +98,8 @@ export default function DocumentReviewer({
   docContent: Node[];
   initialReviews: Knowledge[];
 }) {
-  console.log(generateInitialKnowledge(docContent));
-  return <></>;
+  const cards = parseDocument(docContent);
+  return (
+    <CardRenderer currentCard={cards[0]} onFeedback={(q) => console.log(q)} />
+  );
 }
