@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_144850) do
+ActiveRecord::Schema.define(version: 2020_09_12_150041) do
 
   create_table "documents", force: :cascade do |t|
     t.text "title"
@@ -29,7 +29,9 @@ ActiveRecord::Schema.define(version: 2020_09_12_144850) do
     t.integer "repetitions"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "document_id", null: false
     t.index ["card_id"], name: "index_knowledges_on_card_id", unique: true
+    t.index ["document_id"], name: "index_knowledges_on_document_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,4 +52,5 @@ ActiveRecord::Schema.define(version: 2020_09_12_144850) do
   end
 
   add_foreign_key "documents", "users"
+  add_foreign_key "knowledges", "documents"
 end
