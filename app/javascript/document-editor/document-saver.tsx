@@ -35,7 +35,7 @@ export default function DocumentSaver({ state }: { state: any }) {
       } catch (e) {
         setSyncStatus("error");
       }
-      
+
       // Minimum 1 s between runs
       await asyncSleep(1000);
     }),
@@ -47,5 +47,12 @@ export default function DocumentSaver({ state }: { state: any }) {
     updateState(state);
   }, [updateState, state]);
 
-  return <>{syncStatus}</>;
+  switch (syncStatus) {
+    case "synced":
+      return <span className="badge badge-success">All changes saved</span>;
+    case "syncing":
+      return <span className="badge badge-primary">Saving...</span>;
+    case "error":
+      return <span className="badge badge-danger">Failed to save changes</span>;
+  }
 }
