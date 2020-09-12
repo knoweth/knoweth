@@ -6,12 +6,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    @document = Document.find(params[:id])
-
-    if @document.user != current_user
-      flash[:alert] = "Can't access a document you don't own."
-      redirect_to document_path
-    end
+    current_document_with_user_validation
   end
 
   # Called from js by the document editor
@@ -59,8 +54,21 @@ class DocumentsController < ApplicationController
     redirect_to @document
   end
 
+  def review
+    current_document_with_user_validation
+  end
+
   private
     def document_params
       params.require(:document).permit(:title, :content)
+    end
+
+    def current_document_with_user_validation
+      @document = Document.find(params[:id])
+
+      if @document.user != current_user
+        flash[:alert] = "Can't access a document you don't own."
+        redirect_to document_path
+      end
     end
 end
