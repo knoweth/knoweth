@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_043212) do
+ActiveRecord::Schema.define(version: 2020_09_12_144850) do
 
   create_table "documents", force: :cascade do |t|
     t.text "title"
@@ -19,6 +19,17 @@ ActiveRecord::Schema.define(version: 2020_09_03_043212) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "knowledges", force: :cascade do |t|
+    t.string "card_id"
+    t.decimal "ease_factor"
+    t.integer "interval_s"
+    t.integer "learning_step"
+    t.integer "repetitions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["card_id"], name: "index_knowledges_on_card_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

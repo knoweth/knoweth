@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_id: MyString
+  ease_factor: 
+  interval_s: 1
+  learning_step: 1
+  repetitions: 1
+
+two:
+  card_id: MyString
+  ease_factor: 
+  interval_s: 1
+  learning_step: 1
+  repetitions: 1
