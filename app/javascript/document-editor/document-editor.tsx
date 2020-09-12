@@ -222,37 +222,10 @@ const Leaf = (props: RenderLeafProps) => {
 const renderElement = (props) => <Element {...props} />;
 const renderLeaf = (props) => <Leaf {...props} />;
 
-export default () => {
+export default ({ initialContent }: { initialContent: string }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   // Add the initial value when setting up our state.
-  const [value, setValue] = useState<Node[]>([
-    {
-      type: "h1",
-      children: [
-        {
-          text: "Test Question",
-        },
-      ],
-    },
-    {
-      type: "q-table",
-      children: [
-        {
-          type: "q-note",
-          children: [
-            {
-              type: "q-cell",
-              children: [{ text: "test" }],
-            },
-            {
-              type: "q-cell",
-              children: [{ text: "test" }],
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  const [value, setValue] = useState<Node[]>(JSON.parse(initialContent));
 
   return (
     <>

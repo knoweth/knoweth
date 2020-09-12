@@ -1,5 +1,5 @@
 <p><strong>Title: </strong> <%= @document.title %></p>
 
 <% # editor configuration %>
-<div id="document-editor"></div>
+<div id="document-editor" data-initial-content="<%= @document.content %>"></div>
 <%= javascript_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>
