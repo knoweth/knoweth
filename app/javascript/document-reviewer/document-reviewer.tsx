@@ -1,8 +1,12 @@
+import { getNextReview, processRepetition } from "algorithm/anki";
 import ReviewQuality from "algorithm/review-quality";
-import Knowledge from "data/knowledge";
-import React, { useEffect, useState } from "react";
+import Knowledge, { LearningStep } from "data/knowledge";
+import { shuffle } from "lodash";
+import React, { useEffect, useReducer, useState } from "react";
 import { Node } from "slate";
 import parseDocument, { Card } from "./card-parser";
+import moment from "moment";
+import produce from "immer";
 
 function CardRenderer({
   currentCard,
@@ -91,6 +95,35 @@ function CardRenderer({
   );
 }
 
+function reviewerReducer(
+  state: Card[],
+  action: {
+    type: "review";
+    payload: { quality: ReviewQuality; cardId: string };
+  }
+) {
+  // Use immer to return a new state while being able to modify it mutably
+  return produce(state, (draftState) => {
+    switch (action.type) {
+      case "review":
+        const { quality, cardId } = action.payload;
+        const cardIndex = draftState.findIndex((c) => c.cardId === cardId);
+        const k = draftState[cardIndex].knowledge;
+
+        const newK = processRepetition(
+          k,
+          quality,
+          moment().diff(k.lastReview.add(k.interval), "days")
+        );
+        draftState[cardIndex].knowledge = newK;
+        break;
+      default:
+        throw new Error();
+    }
+    return draftState;
+  });
+}
+
 export default function DocumentReviewer({
   docContent,
   initialReviews,
@@ -98,8 +131,38 @@ export default function DocumentReviewer({
   docContent: Node[];
   initialReviews: Knowledge[];
 }) {
-  const cards = parseDocument(docContent);
+  const [cards, dispatch] = useReducer(
+    reviewerReducer,
+    parseDocument(docContent)
+  );
+
+  const reviewableCards = shuffle(
+    cards.filter(
+      (card) =>
+        card.knowledge.learningStep !== LearningStep.GRADUATED ||
+        card.knowledge.interval.asDays() < 1
+    )
+  );
+
+  const currentCard = reviewableCards[0];
+
+  if (currentCard === undefined) {
+    // We reviewed the whole thing!
+    return <p>There are no more cards to review!</p>;
+  }
+
   return (
-    <CardRenderer currentCard={cards[0]} onFeedback={(q) => console.log(q)} />
+    <CardRenderer
+      currentCard={currentCard}
+      // Rerender the card if our knowledge about it changes - that means we
+      // clicked an answer button.
+      key={JSON.stringify(currentCard.knowledge)}
+      onFeedback={(q) =>
+        dispatch({
+          type: "review",
+          payload: { quality: q, cardId: currentCard.cardId },
+        })
+      }
+    />
   );
 }

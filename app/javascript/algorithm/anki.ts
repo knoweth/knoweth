@@ -17,6 +17,7 @@ export function createUnreviewedKnowledge(): Knowledge {
     learningStep: LearningStep.NEW,
     repetitions: 0,
     interval: INTERVAL_REP_ONE,
+    lastReview: moment(), // todo is this right lol
   };
 }
 
@@ -163,7 +164,8 @@ function nextReviewInterval(
   );
   const easyInterval = constrainedIntervalAfter(
     moment.duration(
-      currentInterval.clone().add(daysOverdue, "days").asMilliseconds() * easeFactor
+      currentInterval.clone().add(daysOverdue, "days").asMilliseconds() *
+        easeFactor
     ),
     goodInterval
   );
@@ -215,7 +217,11 @@ export function processRepetition(
   quality: ReviewQuality,
   daysOverdue: number
 ): Knowledge {
-  knowledge = { ...knowledge, repetitions: knowledge.repetitions + 1 };
+  knowledge = {
+    ...knowledge,
+    repetitions: knowledge.repetitions + 1,
+    lastReview: moment(),
+  };
   if (knowledge.learningStep === LearningStep.NEW) {
     // Move to learning step one
     knowledge = { ...knowledge, learningStep: LearningStep.LEARNING_ONE };

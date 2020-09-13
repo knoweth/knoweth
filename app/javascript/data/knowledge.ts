@@ -1,4 +1,4 @@
-import { Duration } from "moment";
+import { Duration, Moment } from "moment";
 
 export enum LearningStep {
   NEW,
@@ -12,4 +12,5 @@ export default interface Knowledge {
   interval: Duration;
   learningStep: LearningStep;
   repetitions: number;
+  lastReview: Moment;
 }

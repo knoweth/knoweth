@@ -9,7 +9,9 @@ environment.plugins.append(
     $: "jquery",
     jQuery: "jquery",
     Popper: ["popper.js", "default"],
-  })
+  }),
+  // Ignore moment locales to save significant bundle size
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 );
 
 module.exports = environment;
