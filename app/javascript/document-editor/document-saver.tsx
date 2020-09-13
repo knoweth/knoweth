@@ -23,6 +23,16 @@ export default function DocumentSaver({ state }: { state: any }) {
         abortController: AbortController;
       }) => {
         setSyncStatus("syncing");
+        function onBeforeUnload(e: BeforeUnloadEvent) {
+          // Cancel the event
+          // If you prevent default behavior in Mozilla Firefox prompt will
+          // always be shown
+          e.preventDefault();
+          // Chrome requires returnValue to be set
+          e.returnValue = "";
+        }
+        window.addEventListener("beforeunload", onBeforeUnload);
+
         try {
           await fetch(location.href, {
             method: "PUT",
@@ -46,6 +56,8 @@ export default function DocumentSaver({ state }: { state: any }) {
             return;
           }
           setSyncStatus("error");
+        } finally {
+          window.removeEventListener("beforeunload", onBeforeUnload);
         }
 
         // Minimum 1 s between runs
