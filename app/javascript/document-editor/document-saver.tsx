@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import asyncSleep from "util/async-sleep";
 import asyncThrottle from "util/async-throttle";
-
-// Must grab CSRF token to get past Rails's integrity protection (which is
-// probably good to keep enabled!)
-const csrfToken = document
-  .querySelector("meta[name=csrf-token]")
-  .getAttribute("content");
+import csrfToken from "util/csrf-token";
 
 export default function DocumentSaver({ state }: { state: any }) {
   const [syncStatus, setSyncStatus] = useState<"synced" | "syncing" | "error">(
