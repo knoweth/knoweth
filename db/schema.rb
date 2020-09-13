@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_150041) do
+ActiveRecord::Schema.define(version: 2020_09_13_193924) do
 
   create_table "documents", force: :cascade do |t|
     t.text "title"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_150041) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "document_id", null: false
+    t.datetime "last_review"
     t.index ["card_id"], name: "index_knowledges_on_card_id", unique: true
     t.index ["document_id"], name: "index_knowledges_on_document_id"
   end

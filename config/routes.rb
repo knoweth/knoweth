@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :documents
   get '/documents/review/:id', to: 'documents#review'
+  put 'knowledge/upsert'
 
   root "welcome#index"
 end

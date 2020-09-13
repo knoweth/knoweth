@@ -1,4 +1,7 @@
 <h1>Reviewing: <%= @document.title %></h1>
 
-<article id="document-reviewer" data-document-content="<%= @document.content %>" data-knowledges="<%= @reviews %>"></article>
+<article id="document-reviewer"
+  data-document-id="<%= @document.id %>"
+  data-document-content="<%= @document.content %>"
+  data-knowledges="<%= @reviews %>"></article>
 <%= javascript_pack_tag 'document-reviewer', 'data-turbolinks-track': 'reload' %>

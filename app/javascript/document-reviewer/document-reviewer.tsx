@@ -7,6 +7,7 @@ import { Node } from "slate";
 import parseDocument, { Card } from "./card-parser";
 import moment from "moment";
 import produce from "immer";
+import ReviewSaver from "./review-saver";
 
 function CardRenderer({
   currentCard,
@@ -127,9 +128,11 @@ function reviewerReducer(
 export default function DocumentReviewer({
   docContent,
   initialReviews,
+  documentId,
 }: {
   docContent: Node[];
   initialReviews: Knowledge[];
+  documentId: number;
 }) {
   const [cards, dispatch] = useReducer(
     reviewerReducer,
@@ -146,23 +149,29 @@ export default function DocumentReviewer({
 
   const currentCard = reviewableCards[0];
 
-  if (currentCard === undefined) {
-    // We reviewed the whole thing!
-    return <p>There are no more cards to review!</p>;
-  }
-
   return (
-    <CardRenderer
-      currentCard={currentCard}
-      // Rerender the card if our knowledge about it changes - that means we
-      // clicked an answer button.
-      key={JSON.stringify(currentCard.knowledge)}
-      onFeedback={(q) =>
-        dispatch({
-          type: "review",
-          payload: { quality: q, cardId: currentCard.cardId },
-        })
-      }
-    />
+    // A note: review saver should always exist so that it can push the latest
+    // changes.
+    <>
+      <ReviewSaver cards={cards} documentId={documentId} />
+      {currentCard !== undefined && (
+        <CardRenderer
+          currentCard={currentCard}
+          // Rerender the card if our knowledge about it changes - that means we
+          // clicked an answer button.
+          key={JSON.stringify(currentCard.knowledge)}
+          onFeedback={(q) =>
+            dispatch({
+              type: "review",
+              payload: { quality: q, cardId: currentCard.cardId },
+            })
+          }
+        />
+      )}
+      {currentCard === undefined && (
+        // We reviewed the whole thing!
+        <p>There are no more cards to review!</p>
+      )}
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import csrfToken from "util/csrf-token";
-import useServerSync, { SyncStatus } from "util/hooks/use-server-sync";
+import useServerSync, { SyncStatus } from "syncing/use-server-sync";
+import SyncBadge from "syncing/sync-badge";
 
 export default function DocumentSaver({ state }: { state: any }) {
   const syncStatus = useServerSync(
@@ -25,12 +26,5 @@ export default function DocumentSaver({ state }: { state: any }) {
     1000
   );
 
-  switch (syncStatus) {
-    case SyncStatus.SYNCED:
-      return <span className="badge badge-success">All changes saved</span>;
-    case SyncStatus.SYNCING:
-      return <span className="badge badge-primary">Saving...</span>;
-    case SyncStatus.ERROR:
-      return <span className="badge badge-danger">Failed to save changes</span>;
-  }
+  return <SyncBadge status={syncStatus} />;
 }
