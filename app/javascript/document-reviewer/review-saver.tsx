@@ -28,6 +28,7 @@ export default function ReviewSaver({
             interval_s: c.knowledge.interval.asSeconds(),
             learning_step: c.knowledge.learningStep,
             repetitions: c.knowledge.repetitions,
+            last_review: c.knowledge.lastReview
           })),
         }),
         signal: abortController.signal,

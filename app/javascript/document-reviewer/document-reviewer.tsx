@@ -127,16 +127,17 @@ function reviewerReducer(
 
 export default function DocumentReviewer({
   docContent,
-  initialReviews,
+  priorKnowledge,
   documentId,
 }: {
   docContent: Node[];
-  initialReviews: Knowledge[];
+  // Map card id to knowledge known before
+  priorKnowledge: Map<string, Knowledge>;
   documentId: number;
 }) {
   const [cards, dispatch] = useReducer(
     reviewerReducer,
-    parseDocument(docContent)
+    parseDocument(docContent, priorKnowledge)
   );
 
   const reviewableCards = shuffle(

@@ -56,7 +56,7 @@ class DocumentsController < ApplicationController
 
   def review
     current_document_with_user_validation
-    @knowledges = Knowledge.where(document_id: @document.id)
+    @knowledges = Knowledge.where(document_id: @document.id).to_json
   end
 
   private

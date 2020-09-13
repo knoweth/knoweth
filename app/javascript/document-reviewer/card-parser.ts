@@ -12,7 +12,10 @@ export type Card = {
   knowledge: Knowledge;
 };
 
-export default function parseDocument(docNodes: Node[]) {
+export default function parseDocument(
+  docNodes: Node[],
+  priorKnowledge: Map<string, Knowledge>
+) {
   // Hello, breadth-first search.
   const data: Card[] = [];
   const queue: Node[] = [];
@@ -31,7 +34,10 @@ export default function parseDocument(docNodes: Node[]) {
         // with formatting.
         left: children[0].children[0].text as string,
         right: children[1].children[0].text as string,
-        knowledge: createUnreviewedKnowledge(),
+        // Here's where the knowledge gets made.
+        knowledge: priorKnowledge.has(cardId)
+          ? priorKnowledge.get(cardId)
+          : createUnreviewedKnowledge(),
       });
     }
 
