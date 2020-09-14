@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import asyncSleep from "util/async-sleep";
-import asyncThrottle from "util/async-throttle";
+import asyncSleep from "../util/async-sleep";
+import asyncThrottle from "../util/async-throttle";
 
 export enum SyncStatus {
   SYNCED,

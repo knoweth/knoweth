@@ -1,8 +1,8 @@
 import React from "react";
-import csrfToken from "util/csrf-token";
-import useServerSync from "syncing/use-server-sync";
+import csrfToken from "../util/csrf-token";
+import useServerSync from "../syncing/use-server-sync";
 import { Card } from "./card-parser";
-import SyncBadge from "syncing/sync-badge";
+import SyncBadge from "../syncing/sync-badge";
 
 export default function ReviewSaver({
   cards,

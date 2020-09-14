@@ -8,9 +8,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "app/javascript/*"]
-    },
     "sourceMap": true,
     "target": "es5",
     "jsx": "preserve",

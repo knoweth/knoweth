@@ -1,5 +1,5 @@
-import Knowledge from "data/knowledge";
-import DocumentReviewer from "document-reviewer/document-reviewer";
+import Knowledge from "../data/knowledge";
+import DocumentReviewer from "../document-reviewer/document-reviewer";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import moment from "moment";

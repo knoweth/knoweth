@@ -1,10 +1,9 @@
 import {
-  getNextReview,
   processRepetition,
   shouldReviewToday,
-} from "algorithm/anki";
-import ReviewQuality from "algorithm/review-quality";
-import Knowledge, { LearningStep } from "data/knowledge";
+} from "../algorithm/anki";
+import ReviewQuality from "../algorithm/review-quality";
+import Knowledge from "../data/knowledge";
 import { shuffle } from "lodash";
 import React, { useEffect, useReducer, useState } from "react";
 import { Node } from "slate";
