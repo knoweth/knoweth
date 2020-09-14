@@ -24,31 +24,31 @@ class DocumentsController < ApplicationController
     # Initial document content here
     @document.content = '[
         {
-          type: "h1",
-          children: [
+          "type": "h1",
+          "children": [
             {
-              text: "Test Question",
-            },
-          ],
+              "text": "Test Question"
+            }
+          ]
         },
         {
-          type: "q-table",
-          children: [
+          "type": "q-table",
+          "children": [
             {
-              type: "q-note",
-              children: [
+              "type": "q-note",
+              "children": [
                 {
-                  type: "q-cell",
-                  children: [{ text: "test" }],
+                  "type": "q-cell",
+                  "children": [{ "text": "test" }]
                 },
                 {
-                  type: "q-cell",
-                  children: [{ text: "test" }],
-                },
-              ],
-            },
-          ],
-        },
+                  "type": "q-cell",
+                  "children": [{ "text": "test" }]
+                }
+              ]
+            }
+          ]
+        }
       ]'
     @document.save!
     redirect_to @document
