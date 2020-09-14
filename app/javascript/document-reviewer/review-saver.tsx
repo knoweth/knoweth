@@ -24,7 +24,9 @@ export default function ReviewSaver({
           knowledges: newCards.map((c) => ({
             card_id: c.cardId,
             document_id: documentId,
-            ease_factor: c.knowledge.easeFactor,
+            // Plus is required here because in rails, this is stored as a
+            // decimal, which when serialized becomes a string.
+            ease_factor: +c.knowledge.easeFactor,
             interval_s: c.knowledge.interval.asSeconds(),
             learning_step: c.knowledge.learningStep,
             repetitions: c.knowledge.repetitions,

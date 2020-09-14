@@ -1,7 +1,4 @@
-import {
-  processRepetition,
-  shouldReviewToday,
-} from "../algorithm/anki";
+import { processRepetition, shouldReviewToday } from "../algorithm/anki";
 import ReviewQuality from "../algorithm/review-quality";
 import Knowledge from "../data/knowledge";
 import { shuffle } from "lodash";
@@ -20,6 +17,10 @@ function CardRenderer({
   onFeedback: (quality: ReviewQuality) => void;
 }) {
   const [answerShown, setAnswerShown] = useState(false);
+
+  useEffect(() => {
+    setAnswerShown(false);
+  }, [currentCard]);
 
   useEffect(() => {
     function handler(e: KeyboardEvent) {
