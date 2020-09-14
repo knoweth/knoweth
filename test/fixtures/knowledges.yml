@@ -2,14 +2,16 @@
 
 one:
   card_id: MyString
-  ease_factor: 
+  ease_factor: 1
   interval_s: 1
   learning_step: 1
   repetitions: 1
+  document_id: 1
 
 two:
-  card_id: MyString
-  ease_factor: 
+  card_id: MyString2
+  ease_factor: 1
   interval_s: 1
   learning_step: 1
   repetitions: 1
+  document_id: 1
