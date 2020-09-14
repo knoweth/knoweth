@@ -1,4 +1,8 @@
-import { getNextReview, processRepetition } from "algorithm/anki";
+import {
+  getNextReview,
+  processRepetition,
+  shouldReviewToday,
+} from "algorithm/anki";
 import ReviewQuality from "algorithm/review-quality";
 import Knowledge, { LearningStep } from "data/knowledge";
 import { shuffle } from "lodash";
@@ -141,11 +145,7 @@ export default function DocumentReviewer({
   );
 
   const reviewableCards = shuffle(
-    cards.filter(
-      (card) =>
-        card.knowledge.learningStep !== LearningStep.GRADUATED ||
-        card.knowledge.interval.asDays() < 1
-    )
+    cards.filter((card) => shouldReviewToday(moment(), card.knowledge))
   );
 
   const currentCard = reviewableCards[0];

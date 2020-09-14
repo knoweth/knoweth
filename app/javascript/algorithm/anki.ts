@@ -1,4 +1,4 @@
-import moment, { Duration } from "moment";
+import moment, { Duration, Moment } from "moment";
 import Knowledge, { LearningStep } from "../data/knowledge";
 import ReviewQuality from "./review-quality";
 
@@ -234,6 +234,19 @@ export function processRepetition(
     return answerLearning(knowledge, quality);
   } else {
     return answerReview(knowledge, quality, daysOverdue);
+  }
+}
+
+export function shouldReviewToday(now: Moment, knowledge: Knowledge) {
+  switch (knowledge.learningStep) {
+    case LearningStep.GRADUATED:
+      return now
+        .startOf("day")
+        .add(1, "day")
+        .isAfter(knowledge.lastReview.clone().add(knowledge.interval));
+    default:
+      // Everything else (learning or new) should be reviewed today.
+      return true;
   }
 }
 

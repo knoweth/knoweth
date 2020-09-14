@@ -5,7 +5,7 @@ import {
   INTERVAL_LEARNING_TWO,
   INTERVAL_REP_ONE,
   DEFAULT_EASE_FACTOR,
-  getNextReview,
+  getNextReview, shouldReviewToday
 } from "./anki";
 import ReviewQuality from "./review-quality";
 import { LearningStep } from "../data/knowledge";
@@ -13,18 +13,24 @@ import moment from "moment";
 
 it("continual good interval tests", () => {
   let k = createUnreviewedKnowledge();
+  const now = moment();
   k = processRepetition(k, ReviewQuality.AGAIN, 0);
   expect(k.repetitions).toBe(1);
   expect(k.learningStep).toBe(LearningStep.LEARNING_ONE);
   expect(getNextReview(k)).toEqual(INTERVAL_LEARNING_ONE);
+  expect(shouldReviewToday(now, k)).toBe(true);
   k = processRepetition(k, ReviewQuality.GOOD, 0);
   expect(k.learningStep).toBe(LearningStep.LEARNING_TWO);
   expect(getNextReview(k)).toEqual(INTERVAL_LEARNING_TWO);
+  expect(shouldReviewToday(now, k)).toBe(true);
   k = processRepetition(k, ReviewQuality.GOOD, 0);
   expect(k.learningStep).toBe(LearningStep.GRADUATED);
   expect(getNextReview(k)).toEqual(INTERVAL_REP_ONE);
+  expect(shouldReviewToday(now, k)).toBe(false);
   k = processRepetition(k, ReviewQuality.GOOD, 0);
   expect(getNextReview(k)).toEqual(moment.duration(3, "days"));
+  // Should be willing to review 
+  expect(shouldReviewToday(now.clone().add(3, "days"), k)).toBe(true);
   k = processRepetition(k, ReviewQuality.GOOD, 0);
   expect(getNextReview(k).asMilliseconds()).toEqual(
     moment.duration(5, "days").asMilliseconds()
