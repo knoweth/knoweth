@@ -1,19 +1,24 @@
-<h1>Listing Documents</h1>
+<h1>Your Documents</h1>
  
 <table class="table">
   <tr>
     <th>Title</th>
-    <th>Edit</th>
-    <th>Review</th>
-    <th>Delete</th>
+    <th>Actions</th>
   </tr>
  
   <% @documents.each do |document| %>
     <tr>
       <td><%= document.title %></td>
-      <td><%= link_to 'Show', document_path(document) %></td>
-      <td><%= link_to 'Review', controller: "documents", action: "review", id: document.id %></td>
-      <td><%= link_to 'Delete', document_path(document), method: :delete, :confirm => "Are you sure?" %></td>
+      <td>
+        <div class="btn-group" role="group" aria-label="Document actions">
+          <%= link_to 'Show', document_path(document),
+                      class: "btn btn-primary", role: "button" %>
+          <%= link_to 'Review', { controller: "documents", action: "review", id: document.id },
+                      class: "btn btn-success", role: "button" %>
+          <%= link_to 'Delete', document_path(document), method: :delete, confirm: "Are you sure?",
+                      class: "btn btn-danger", role: "button" %>
+        </div>
+      </td>
     </tr>
   <% end %>
 </table>
