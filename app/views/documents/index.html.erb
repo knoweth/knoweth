@@ -5,6 +5,7 @@
     <th>Title</th>
     <th>Edit</th>
     <th>Review</th>
+    <th>Delete</th>
   </tr>
  
   <% @documents.each do |document| %>
@@ -12,6 +13,7 @@
       <td><%= document.title %></td>
       <td><%= link_to 'Show', document_path(document) %></td>
       <td><%= link_to 'Review', controller: "documents", action: "review", id: document.id %></td>
+      <td><%= link_to 'Delete', document_path(document), method: :delete, :confirm => "Are you sure?" %></td>
     </tr>
   <% end %>
 </table>

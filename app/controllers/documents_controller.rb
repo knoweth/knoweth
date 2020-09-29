@@ -54,6 +54,12 @@ class DocumentsController < ApplicationController
     redirect_to @document
   end
 
+  def destroy
+    @document = Document.find(params[:id])
+    @document.destroy
+    redirect_to documents_url, :notice => "Successfully deleted document."
+  end
+
   def review
     current_document_with_user_validation
     @knowledges = Knowledge.where(document_id: @document.id).to_json

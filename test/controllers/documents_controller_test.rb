@@ -28,4 +28,23 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
     # The document's initial JSON should be valid.
     JSON.parse Document.where(title: "test").first.content
   end
+
+  test "can delete document" do
+    sign_in users(:alex)
+    post "/documents", params: {
+      document: {
+        title: "test"
+      }
+    }
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+
+    delete path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+    assert_equal "/documents", path
+    assert_equal "Successfully deleted document.", flash[:notice]
+  end
 end
