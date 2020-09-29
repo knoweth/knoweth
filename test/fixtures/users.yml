@@ -7,6 +7,7 @@
 alex:
   id: 1
   email: test@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'test') %>
   # Must be confirmed
   confirmed_at: 2020-05-20
 # column: value
@@ -14,5 +15,6 @@ alex:
 bridget:
   id: 2
   email: test2@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'test') %>
   confirmed_at: 2020-05-20
 # column: value
