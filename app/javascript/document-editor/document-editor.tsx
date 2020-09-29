@@ -90,11 +90,32 @@ const HoveringToolbar = () => {
     }px`;
   });
 
+  const currentNoteHasFlashcard = (function currentNoteHasFlashcard() {
+    const currentLoc = editor.selection?.anchor.path;
+    if (!currentLoc) {
+      return false;
+    }
+
+    let node: Node = editor;
+    // Traverse the tree until we find a q-note to enable flashcards.
+    for (let i = 0; i < currentLoc.length; i++) {
+      const path = currentLoc.slice(0, i + 1);
+      node = node.children[currentLoc[i]];
+
+      // If we find a note, set the data to include its card ID
+      if (node.type === "q-note") {
+        return node.cardId !== undefined;
+      }
+    }
+    return false;
+  })();
+
   return (
     <Portal>
       <StyledToolbar ref={ref}>
         <p>
           <button
+            className="btn btn-primary"
             onClick={() => {
               const currentLoc = editor.selection.anchor.path;
               let node: Node = editor;
@@ -107,14 +128,22 @@ const HoveringToolbar = () => {
                 if (node.type === "q-note") {
                   Transforms.setNodes(
                     editor,
-                    { cardId: generateCardId() },
+                    {
+                      cardId: currentNoteHasFlashcard
+                        ? undefined
+                        : generateCardId(),
+                    },
                     { at: path }
                   );
                 }
               }
             }}
           >
-            Create flashcard
+            {currentNoteHasFlashcard ? (
+              <>Remove flashcard</>
+            ) : (
+              <>Create flashcard</>
+            )}
           </button>
         </p>
       </StyledToolbar>
