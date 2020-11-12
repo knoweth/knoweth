@@ -1,6 +1,9 @@
 class KnowledgeController < ApplicationController
   def upsert
-    params.require(:knowledges)
+    if params[:knowledges].empty?
+      return
+    end
+    
     ks = params[:knowledges]
     ks.each do |k|
       k[:created_at] = Time.now
