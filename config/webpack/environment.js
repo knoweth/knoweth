@@ -15,4 +15,3 @@ environment.plugins.append(
 );
 
 module.exports = environment;
-module.exports = environment;
