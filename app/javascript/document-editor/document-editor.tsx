@@ -5,10 +5,7 @@ import React, { useMemo, useState } from "react";
 import { createEditor, Node, Editor, Transforms } from "slate";
 
 // Import the Slate components and React plugin.
-import {
-  Slate,
-  withReact,
-} from "slate-react";
+import { Slate, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import { generateCardId } from "./card-id";
 import DocumentSaver from "./document-saver";
@@ -62,7 +59,7 @@ import {
   Payments,
 } from "@styled-icons/material";
 import { renderTrWithCardId } from "./render-table-row";
-import { renderTable } from "./render-table";
+import { onKeyDownTable, renderTable } from "./render-table";
 
 function toggleFlashcard(editor: Editor) {
   const currentNoteHasFlashcard = (function currentNoteHasFlashcard() {
@@ -191,6 +188,7 @@ export default ({ initialContent }: { initialContent: string }) => {
         <EditablePlugins
           plugins={plugins}
           renderElement={[renderTable, renderTrWithCardId]}
+          onKeyDown={[onKeyDownTable]}
         />
       </Slate>
     </>
