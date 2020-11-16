@@ -5,7 +5,13 @@ import React, { useMemo, useState, useRef, useEffect } from "react";
 import { createEditor, Node, Editor, Transforms, Text, Range } from "slate";
 
 // Import the Slate components and React plugin.
-import { Slate, withReact, useSlate, ReactEditor } from "slate-react";
+import {
+  Slate,
+  withReact,
+  useSlate,
+  ReactEditor,
+  RenderElementProps,
+} from "slate-react";
 import { withHistory } from "slate-history";
 import styled from "styled-components";
 import { generateCardId } from "./card-id";
@@ -24,6 +30,7 @@ import {
   ELEMENT_H5,
   ELEMENT_H6,
   ELEMENT_TD,
+  ELEMENT_TR,
   ExitBreakPlugin,
   HeadingPlugin,
   HeadingToolbar,
@@ -36,7 +43,6 @@ import {
   pipe,
   SoftBreakPlugin,
   TablePlugin,
-  ToolbarButton,
   ToolbarElement,
   ToolbarMark,
   ToolbarTable,
@@ -58,6 +64,8 @@ import {
   LooksTwo,
   Payments,
 } from "@styled-icons/material";
+import { renderTrWithCardId } from "./render-table-row";
+import { renderTable } from "./render-table";
 
 function toggleFlashcard(editor: Editor) {
   const currentNoteHasFlashcard = (function currentNoteHasFlashcard() {
@@ -73,7 +81,7 @@ function toggleFlashcard(editor: Editor) {
       node = node.children[currentLoc[i]];
 
       // If we find a note, set the data to include its card ID
-      if (node.type === "tr") {
+      if (node.type === ELEMENT_TR) {
         return node.cardId !== undefined;
       }
     }
@@ -88,7 +96,7 @@ function toggleFlashcard(editor: Editor) {
     node = node.children[currentLoc[i]];
 
     // If we find a note, set the data to include its card ID
-    if (node.type === "tr") {
+    if (node.type === ELEMENT_TR) {
       Transforms.setNodes(
         editor,
         {
@@ -183,7 +191,10 @@ export default ({ initialContent }: { initialContent: string }) => {
           <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
           <ToolbarTable icon={<BorderClear />} transform={deleteTable} />
         </HeadingToolbar>
-        <EditablePlugins plugins={plugins} />
+        <EditablePlugins
+          plugins={plugins}
+          renderElement={[renderTable, renderTrWithCardId]}
+        />
       </Slate>
     </>
   );
