@@ -23,7 +23,6 @@ export function renderTrWithCardId({
   ...props
 }: RenderElementProps) {
   if (props.element.type === ELEMENT_TR) {
-    console.log(props);
     return (
       <NoteRow
         isNote={props.element.cardId !== undefined}

@@ -1,19 +1,15 @@
 // Import React dependencies.
 import ReactDOM from "react-dom";
-import React, { useMemo, useState, useRef, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 // Import the Slate editor factory.
-import { createEditor, Node, Editor, Transforms, Text, Range } from "slate";
+import { createEditor, Node, Editor, Transforms } from "slate";
 
 // Import the Slate components and React plugin.
 import {
   Slate,
   withReact,
-  useSlate,
-  ReactEditor,
-  RenderElementProps,
 } from "slate-react";
 import { withHistory } from "slate-history";
-import styled from "styled-components";
 import { generateCardId } from "./card-id";
 import DocumentSaver from "./document-saver";
 import {
@@ -47,6 +43,7 @@ import {
   ToolbarMark,
   ToolbarTable,
   UnderlinePlugin,
+  withTable,
 } from "@udecode/slate-plugins";
 import {
   FormatBold,
@@ -109,12 +106,11 @@ function toggleFlashcard(editor: Editor) {
 }
 
 const plugins = [
-  HeadingPlugin(),
   ParagraphPlugin(),
+  HeadingPlugin(),
   BoldPlugin(),
   ItalicPlugin(),
   UnderlinePlugin(),
-  TablePlugin(),
   SoftBreakPlugin({
     rules: [
       { hotkey: "shift+enter" },
@@ -152,8 +148,9 @@ const plugins = [
       },
     ],
   }),
+  TablePlugin(),
 ];
-const withPlugins = [withReact, withHistory] as const;
+const withPlugins = [withReact, withHistory, withTable()] as const;
 
 export default ({ initialContent }: { initialContent: string }) => {
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
