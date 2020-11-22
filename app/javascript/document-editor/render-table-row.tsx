@@ -52,6 +52,7 @@ export function renderTdWithOcclusion({
     return (
       <NoteCell
         hidden={props.element.hidden == true}
+        // Used for auto-scrolling behavior (document scrolls to hidden cell in reviewer)
         data-cell-hidden={props.element.hidden == true}
         {...attributes}
         {...props}
