@@ -1,22 +1,29 @@
 import { processRepetition, shouldReviewToday } from "../algorithm/anki";
 import ReviewQuality from "../algorithm/review-quality";
 import Knowledge from "../data/knowledge";
-import { shuffle } from "lodash";
+import { cloneDeep, shuffle } from "lodash";
 import React, { useEffect, useReducer, useState } from "react";
-import { Node } from "slate";
-import parseDocument, { Card } from "./card-parser";
+import { Editor, Node, Path, Transforms } from "slate";
+import parseDocument, { Card, getCells } from "./card-parser";
 import moment from "moment";
 import produce from "immer";
 import ReviewSaver from "./review-saver";
+import SlateEditor from "../document-editor/slate-editor";
 
-function CardRenderer({
+function ReviewOverlay({
   currentCard,
+  onReveal,
   onFeedback,
 }: {
   currentCard: Card;
+  onReveal: () => void;
   onFeedback: (quality: ReviewQuality) => void;
 }) {
   const [answerShown, setAnswerShown] = useState(false);
+  function showAnswer() {
+    setAnswerShown(true);
+    onReveal();
+  }
 
   useEffect(() => {
     setAnswerShown(false);
@@ -25,7 +32,7 @@ function CardRenderer({
   useEffect(() => {
     function handler(e: KeyboardEvent) {
       if (e.key === " ") {
-        setAnswerShown(true);
+        showAnswer();
       } else if (answerShown) {
         switch (e.key) {
           case "1":
@@ -51,22 +58,15 @@ function CardRenderer({
   return (
     <div className="card">
       <div className="card-body text-center">
-        <p>{currentCard.left}</p>
-
         {!answerShown && (
           <p>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setAnswerShown(true)}
-            >
+            <button className="btn btn-secondary" onClick={() => showAnswer()}>
               Show Answer
             </button>
           </p>
         )}
         {answerShown && (
           <>
-            <hr />
-            <p>{currentCard.right}</p>
             <div className="btn-group">
               <button
                 className="btn btn-danger"
@@ -125,7 +125,24 @@ function reviewerReducer(
       default:
         throw new Error();
     }
-    return draftState;
+  });
+}
+
+function toggleCardVisibility(
+  doc: Node[],
+  cardPath: Path,
+  hidden: boolean
+): Node[] {
+  const { answerPath } = getCells(cardPath);
+
+  // Set the answer to be hidden or not
+  return produce(doc, (draft) => {
+    let cur: Node = draft[answerPath[0]];
+    for (let i = 1; i < answerPath.length; i++) {
+      cur = cur.children[answerPath[i]];
+    }
+
+    cur.hidden = hidden;
   });
 }
 
@@ -139,6 +156,8 @@ export default function DocumentReviewer({
   priorKnowledge: Map<string, Knowledge>;
   documentId: number;
 }) {
+  const [content, setContent] = useState(docContent);
+  const [isHidingCard, setIsHidingCard] = useState(true);
   const [cards, dispatch] = useReducer(
     reviewerReducer,
     parseDocument(docContent, priorKnowledge)
@@ -150,29 +169,44 @@ export default function DocumentReviewer({
 
   const currentCard = reviewableCards[0];
 
+  useEffect(() => {
+    if (currentCard !== undefined) {
+      console.log("Toggling card visibility", docContent, isHidingCard);
+      setContent(
+        toggleCardVisibility(docContent, currentCard.path, isHidingCard)
+      );
+    }
+  }, [docContent, currentCard, isHidingCard]);
+
   return (
     // A note: review saver should always exist so that it can push the latest
     // changes.
     <>
       <ReviewSaver cards={cards} documentId={documentId} />
       {currentCard !== undefined && (
-        <CardRenderer
+        <ReviewOverlay
           currentCard={currentCard}
           // Rerender the card if our knowledge about it changes - that means we
           // clicked an answer button.
           key={JSON.stringify(currentCard.knowledge)}
-          onFeedback={(q) =>
+          onReveal={() => {
+            setIsHidingCard(false);
+          }}
+          onFeedback={(q) => {
             dispatch({
               type: "review",
               payload: { quality: q, cardId: currentCard.cardId },
-            })
-          }
+            });
+            setIsHidingCard(true);
+          }}
         />
       )}
       {currentCard === undefined && (
         // We reviewed the whole thing!
         <p>There are no more cards to review!</p>
       )}
+
+      <SlateEditor interactive={false} value={content} />
     </>
   );
 }

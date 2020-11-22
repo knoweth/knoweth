@@ -58,7 +58,7 @@ import {
   LooksTwo,
   Payments,
 } from "@styled-icons/material";
-import { renderTrWithCardId } from "./render-table-row";
+import { renderTdWithOcclusion, renderTrWithCardId } from "./render-table-row";
 import { onKeyDownTable, renderTable } from "./render-table";
 import styled, { css } from "styled-components";
 
@@ -150,16 +150,6 @@ const plugins = [
 ];
 const withPlugins = [withReact, withHistory, withTable()] as const;
 
-const SelectionBlocker = styled.div<{ blockSelection: boolean }>`
-  ${(props) =>
-    props.blockSelection &&
-    css`
-      * {
-        user-select: none;
-      }
-    `}
-`;
-
 export default function SlateEditor({
   interactive,
   value,
@@ -167,44 +157,43 @@ export default function SlateEditor({
 }: {
   interactive: boolean;
   value: Node[];
-  onChange: (value: Node[]) => void;
+  onChange?: (value: Node[]) => void;
 }) {
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
 
   return (
-    <SelectionBlocker blockSelection={!interactive}>
-      <Slate editor={editor} value={value} onChange={onChange}>
-        {interactive && (
-          <>
-            <BalloonToolbar theme="dark" direction="top">
-              <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
-              <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
-              <ToolbarTable transform={toggleFlashcard} icon={<Payments />} />
-            </BalloonToolbar>
-            <HeadingToolbar>
-              <ToolbarElement type={ELEMENT_H1} icon={<LooksOne />} />
-              <ToolbarElement type={ELEMENT_H2} icon={<LooksTwo />} />
-              <ToolbarElement type={ELEMENT_H3} icon={<Looks3 />} />
-              <ToolbarElement type={ELEMENT_H4} icon={<Looks4 />} />
-              <ToolbarElement type={ELEMENT_H5} icon={<Looks5 />} />
-              <ToolbarElement type={ELEMENT_H6} icon={<Looks6 />} />
-              <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
-              <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
-              <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
-              <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
-              <ToolbarTable icon={<BorderAll />} transform={insertTable} />
-              <ToolbarTable icon={<BorderBottom />} transform={addRow} />
-              <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
-              <ToolbarTable icon={<BorderClear />} transform={deleteTable} />
-            </HeadingToolbar>
-          </>
-        )}
-        <EditablePlugins
-          plugins={plugins}
-          renderElement={[renderTable, renderTrWithCardId]}
-          onKeyDown={[onKeyDownTable]}
-        />
-      </Slate>
-    </SelectionBlocker>
+    <Slate editor={editor} value={value} onChange={onChange || (() => {})}>
+      {interactive && (
+        <>
+          <BalloonToolbar theme="dark" direction="top">
+            <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
+            <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
+            <ToolbarTable transform={toggleFlashcard} icon={<Payments />} />
+          </BalloonToolbar>
+          <HeadingToolbar>
+            <ToolbarElement type={ELEMENT_H1} icon={<LooksOne />} />
+            <ToolbarElement type={ELEMENT_H2} icon={<LooksTwo />} />
+            <ToolbarElement type={ELEMENT_H3} icon={<Looks3 />} />
+            <ToolbarElement type={ELEMENT_H4} icon={<Looks4 />} />
+            <ToolbarElement type={ELEMENT_H5} icon={<Looks5 />} />
+            <ToolbarElement type={ELEMENT_H6} icon={<Looks6 />} />
+            <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
+            <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
+            <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
+            <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
+            <ToolbarTable icon={<BorderAll />} transform={insertTable} />
+            <ToolbarTable icon={<BorderBottom />} transform={addRow} />
+            <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
+            <ToolbarTable icon={<BorderClear />} transform={deleteTable} />
+          </HeadingToolbar>
+        </>
+      )}
+      <EditablePlugins
+        readOnly={!interactive}
+        plugins={plugins}
+        renderElement={[renderTable, renderTrWithCardId, renderTdWithOcclusion]}
+        onKeyDown={[onKeyDownTable]}
+      />
+    </Slate>
   );
 }
