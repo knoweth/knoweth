@@ -52,6 +52,7 @@ export function renderTdWithOcclusion({
     return (
       <NoteCell
         hidden={props.element.hidden == true}
+        data-cell-hidden={props.element.hidden == true}
         {...attributes}
         {...props}
       />

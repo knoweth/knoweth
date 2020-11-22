@@ -146,6 +146,15 @@ function toggleCardVisibility(
   });
 }
 
+function getElementOffset(el: HTMLElement) {
+  const rect = el.getBoundingClientRect();
+
+  return {
+    top: rect.top + window.pageYOffset,
+    left: rect.left + window.pageXOffset,
+  };
+}
+
 export default function DocumentReviewer({
   docContent,
   priorKnowledge,
@@ -177,6 +186,19 @@ export default function DocumentReviewer({
       );
     }
   }, [docContent, currentCard, isHidingCard]);
+
+  // Scroll to hidden card
+  useEffect(() => {
+    const hiddenAns: HTMLElement = document.querySelector(
+      "[data-cell-hidden=true]"
+    );
+    console.log("Hidden el:", hiddenAns);
+    if (hiddenAns !== null) {
+      const { top } = getElementOffset(hiddenAns);
+      console.log("Scrolling to", top);
+      window.scroll({ top, behavior: "smooth" });
+    }
+  }, [content]);
 
   return (
     // A note: review saver should always exist so that it can push the latest
