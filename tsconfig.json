@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "sourceMap": true,
     "target": "es5",
-    "jsx": "preserve",
+    "jsx": "react",
     "downlevelIteration": true
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],

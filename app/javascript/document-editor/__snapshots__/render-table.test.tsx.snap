@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoteCell hidden cell matches snapshot 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="p-3 text-muted bg-light user-select-none text-center"
+        >
+          Answer hidden
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

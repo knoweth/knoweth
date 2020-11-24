@@ -14,13 +14,23 @@ const NoteRow = styled.tr<{ isNote: boolean }>`
     `}
 `;
 
-const NoteCell = styled.td<{ hidden: boolean }>`
-  ${(props) =>
-    props.hidden &&
-    css`
-      background-color: grey;
-    `}
-`;
+export function NoteCell({
+  hidden,
+  children,
+}: {
+  hidden: boolean;
+  children: React.ReactChild;
+}) {
+  if (hidden) {
+    return (
+      <td className="p-3 text-muted bg-light user-select-none text-center">
+        Answer hidden
+      </td>
+    );
+  }
+
+  return <td>{children}</td>;
+}
 
 /**
  * Renders a table row with a highlight for rows that are marked to be
@@ -54,8 +64,7 @@ export function renderTdWithOcclusion({
         hidden={props.element.hidden == true}
         // Used for auto-scrolling behavior (document scrolls to hidden cell in reviewer)
         data-cell-hidden={props.element.hidden == true}
-        {...attributes}
-        {...props}
+        children={props.children}
       />
     );
   }
