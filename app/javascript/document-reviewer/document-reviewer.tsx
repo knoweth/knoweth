@@ -1,104 +1,15 @@
 import { processRepetition, shouldReviewToday } from "../algorithm/anki";
 import ReviewQuality from "../algorithm/review-quality";
 import Knowledge from "../data/knowledge";
-import { cloneDeep, shuffle } from "lodash";
+import { shuffle } from "lodash";
 import React, { useEffect, useReducer, useState } from "react";
-import { Editor, Node, Path, Transforms } from "slate";
+import { Node, Path } from "slate";
 import parseDocument, { Card, getCells } from "./card-parser";
 import moment from "moment";
 import produce from "immer";
 import ReviewSaver from "./review-saver";
 import SlateEditor from "../document-editor/slate-editor";
-
-function ReviewOverlay({
-  currentCard,
-  onReveal,
-  onFeedback,
-}: {
-  currentCard: Card;
-  onReveal: () => void;
-  onFeedback: (quality: ReviewQuality) => void;
-}) {
-  const [answerShown, setAnswerShown] = useState(false);
-  function showAnswer() {
-    setAnswerShown(true);
-    onReveal();
-  }
-
-  useEffect(() => {
-    setAnswerShown(false);
-  }, [currentCard]);
-
-  useEffect(() => {
-    function handler(e: KeyboardEvent) {
-      if (e.key === " ") {
-        showAnswer();
-      } else if (answerShown) {
-        switch (e.key) {
-          case "1":
-            onFeedback(ReviewQuality.AGAIN);
-            break;
-          case "2":
-            onFeedback(ReviewQuality.HARD);
-            break;
-          case "3":
-            onFeedback(ReviewQuality.GOOD);
-            break;
-          case "4":
-            onFeedback(ReviewQuality.EASY);
-            break;
-        }
-      }
-    }
-
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [answerShown]);
-
-  return (
-    <div className="card">
-      <div className="card-body text-center">
-        {!answerShown && (
-          <p>
-            <button className="btn btn-secondary" onClick={() => showAnswer()}>
-              Show Answer
-            </button>
-          </p>
-        )}
-        {answerShown && (
-          <>
-            <div className="btn-group">
-              <button
-                className="btn btn-danger"
-                onClick={() => onFeedback(ReviewQuality.AGAIN)}
-              >
-                Again
-              </button>
-              <button
-                className="btn btn-warning"
-                onClick={() => onFeedback(ReviewQuality.HARD)}
-              >
-                Hard
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => onFeedback(ReviewQuality.GOOD)}
-              >
-                Good
-              </button>
-              <button
-                className="btn btn-success"
-                onClick={() => onFeedback(ReviewQuality.EASY)}
-              >
-                Easy
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
+import ReviewOverlay from "./review-overlay";
 
 function reviewerReducer(
   state: Card[],
@@ -120,6 +31,7 @@ function reviewerReducer(
           quality,
           moment().diff(k.lastReview.add(k.interval), "days")
         );
+        console.log("new card knowledge:", newK);
         draftState[cardIndex].knowledge = newK;
         break;
       default:
@@ -172,8 +84,8 @@ export default function DocumentReviewer({
     parseDocument(docContent, priorKnowledge)
   );
 
-  const reviewableCards = shuffle(
-    cards.filter((card) => shouldReviewToday(moment(), card.knowledge))
+  const reviewableCards = cards.filter((card) =>
+    shouldReviewToday(moment(), card.knowledge)
   );
 
   const currentCard = reviewableCards[0];
@@ -208,13 +120,12 @@ export default function DocumentReviewer({
       {currentCard !== undefined && (
         <ReviewOverlay
           currentCard={currentCard}
-          // Rerender the card if our knowledge about it changes - that means we
-          // clicked an answer button.
-          key={JSON.stringify(currentCard.knowledge)}
+          key={currentCard.cardId}
           onReveal={() => {
             setIsHidingCard(false);
           }}
           onFeedback={(q) => {
+            console.log("Dispatching review: ", currentCard);
             dispatch({
               type: "review",
               payload: { quality: q, cardId: currentCard.cardId },
