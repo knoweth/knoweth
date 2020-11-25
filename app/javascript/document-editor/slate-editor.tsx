@@ -59,6 +59,17 @@ import {
 import { renderTdWithOcclusion, renderTrWithCardId } from "./render-table-row";
 import { onKeyDownTable, renderTable } from "./render-table";
 import PaperContainer from "./paper-container";
+import styled from "styled-components";
+
+const StickyFormattingControls = styled.div`
+  // Stick to the top of the viewport when scrolling past
+  position: sticky;
+  top: 0;
+
+  * {
+    background-color: white;
+  }
+`;
 
 function toggleFlashcard(editor: Editor) {
   const currentNoteHasFlashcard = (function currentNoteHasFlashcard() {
@@ -168,21 +179,24 @@ export default function SlateEditor({
             <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
             <ToolbarTable transform={toggleFlashcard} icon={<Payments />} />
           </BalloonToolbar>
-          <HeadingToolbar>
-            <ToolbarElement type={ELEMENT_H1} icon={<LooksOne />} />
-            <ToolbarElement type={ELEMENT_H2} icon={<LooksTwo />} />
-            <ToolbarElement type={ELEMENT_H3} icon={<Looks3 />} />
-            <ToolbarElement type={ELEMENT_H4} icon={<Looks4 />} />
-            <ToolbarElement type={ELEMENT_H5} icon={<Looks5 />} />
-            <ToolbarElement type={ELEMENT_H6} icon={<Looks6 />} />
-            <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
-            <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
-            <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
-            <ToolbarTable icon={<BorderAll />} transform={insertTable} />
-            <ToolbarTable icon={<BorderBottom />} transform={addRow} />
-            <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
-            <ToolbarTable icon={<BorderClear />} transform={deleteTable} />
-          </HeadingToolbar>
+
+          <StickyFormattingControls>
+            <HeadingToolbar>
+              <ToolbarElement type={ELEMENT_H1} icon={<LooksOne />} />
+              <ToolbarElement type={ELEMENT_H2} icon={<LooksTwo />} />
+              <ToolbarElement type={ELEMENT_H3} icon={<Looks3 />} />
+              <ToolbarElement type={ELEMENT_H4} icon={<Looks4 />} />
+              <ToolbarElement type={ELEMENT_H5} icon={<Looks5 />} />
+              <ToolbarElement type={ELEMENT_H6} icon={<Looks6 />} />
+              <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
+              <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
+              <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
+              <ToolbarTable icon={<BorderAll />} transform={insertTable} />
+              <ToolbarTable icon={<BorderBottom />} transform={addRow} />
+              <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
+              <ToolbarTable icon={<BorderClear />} transform={deleteTable} />
+            </HeadingToolbar>
+          </StickyFormattingControls>
         </>
       )}
       <PaperContainer>
