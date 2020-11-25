@@ -3,17 +3,6 @@ import { RenderElementProps } from "slate-react";
 import styled, { css } from "styled-components";
 import React from "react";
 
-const NoteRow = styled.tr<{ isNote: boolean }>`
-  ${(props) =>
-    props.isNote &&
-    css`
-      // Must be wildcarded because slate sets background color for some reason
-      * {
-        background-color: yellow;
-      }
-    `}
-`;
-
 export function NoteCell({
   hidden,
   children,
@@ -42,8 +31,12 @@ export function renderTrWithCardId({
 }: RenderElementProps) {
   if (props.element.type === ELEMENT_TR) {
     return (
-      <NoteRow
-        isNote={props.element.cardId !== undefined}
+      <tr
+        className={props.element.cardId !== undefined ? "bg-warning" : ""}
+        title={
+          props.element.cardId !== undefined &&
+          `Flashcard ID: ${props.element.cardId}`
+        }
         {...attributes}
         {...props}
       />
