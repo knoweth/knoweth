@@ -1,6 +1,5 @@
 // Import React dependencies.
-import ReactDOM from "react-dom";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 // Import the Slate editor factory.
 import { createEditor, Node, Editor, Transforms } from "slate";
 
@@ -8,7 +7,6 @@ import { createEditor, Node, Editor, Transforms } from "slate";
 import { Slate, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import { generateCardId } from "./card-id";
-import DocumentSaver from "./document-saver";
 import {
   addRow,
   BalloonToolbar,
@@ -60,7 +58,7 @@ import {
 } from "@styled-icons/material";
 import { renderTdWithOcclusion, renderTrWithCardId } from "./render-table-row";
 import { onKeyDownTable, renderTable } from "./render-table";
-import styled, { css } from "styled-components";
+import PaperContainer from "./paper-container";
 
 function toggleFlashcard(editor: Editor) {
   const currentNoteHasFlashcard = (function currentNoteHasFlashcard() {
@@ -188,12 +186,18 @@ export default function SlateEditor({
           </HeadingToolbar>
         </>
       )}
-      <EditablePlugins
-        readOnly={!interactive}
-        plugins={plugins}
-        renderElement={[renderTable, renderTrWithCardId, renderTdWithOcclusion]}
-        onKeyDown={[onKeyDownTable]}
-      />
+      <PaperContainer>
+        <EditablePlugins
+          readOnly={!interactive}
+          plugins={plugins}
+          renderElement={[
+            renderTable,
+            renderTrWithCardId,
+            renderTdWithOcclusion,
+          ]}
+          onKeyDown={[onKeyDownTable]}
+        />
+      </PaperContainer>
     </Slate>
   );
 }
