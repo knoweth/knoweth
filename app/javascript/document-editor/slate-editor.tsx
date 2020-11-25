@@ -178,7 +178,6 @@ export default function SlateEditor({
             <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
             <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
             <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
-            <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
             <ToolbarTable icon={<BorderAll />} transform={insertTable} />
             <ToolbarTable icon={<BorderBottom />} transform={addRow} />
             <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
