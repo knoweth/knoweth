@@ -9,13 +9,26 @@ class DocumentsController < ApplicationController
     current_document_with_user_validation
   end
 
-  # Called from js by the document editor
+  # Called from js by the document editor and by renaming form page
   def update
-    @document = Document.find(params[:id])
+    current_document_with_user_validation
     @document.update!(document_params)
+
+    # Only redirect when an update is done if it was called from a form (non-
+    # json output requested)
+    respond_to do |format|
+      format.json {}
+      format.html {
+        redirect_to document_url(@document)
+      }
+    end
   end
 
   def new
+  end
+
+  def rename
+    current_document_with_user_validation
   end
 
   def create

@@ -1,0 +1,12 @@
+<h1>Rename Document</h1>
+
+<%= form_for @document do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= form.submit class: 'btn btn-primary' %>
+  </p>
+<% end %>
