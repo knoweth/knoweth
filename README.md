@@ -1,36 +1,22 @@
-# README
+# Knoweth - Two Column Reviewing Made Easy
+
+An Anki-like two column reviewing and rich document editing application.
+
+## Development
+
+### Getting Started
+
+1. `yarn` && `bundle install`
+2. Run the following:
 
 ```
 bin/rails server
 bin/webpack-dev-server
 ```
 
-## Implementation Plan
+### Testing
 
-1. Ability to add notes to documents
-2. Authentication
-3. Reviewing
-4. Landing pages
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-- Ruby version
-
-- System dependencies
-
-- Configuration
-
-- Database creation
-
-- Database initialization
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
-
-- ...
+```
+bin/rails test
+bin/rails test:system
+```
