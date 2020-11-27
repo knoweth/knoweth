@@ -18,9 +18,11 @@ class DocumentsTest < ApplicationSystemTestCase
     create_document
     click_on 'Rename'
 
-    fill_in 'document_title', with: 'Test2'
-    sleep(inspection_time=1) # magic required ...
-    click_on 'Update Document'
+    # For some reason this pops up an alert sometimes
+    accept_alert do
+      fill_in 'document_title', with: 'Test2'
+      click_on 'Update Document'
+    end
 
     assert_text 'Test2'
     assert_text 'All changes saved' # Good save
