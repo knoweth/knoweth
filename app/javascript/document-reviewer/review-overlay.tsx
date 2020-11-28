@@ -1,31 +1,66 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { processRepetition } from "../algorithm/anki";
 import ReviewQuality from "../algorithm/review-quality";
+import Knowledge from "../data/knowledge";
 import { Card } from "./card-parser";
 
+const FloatingCard = styled.div`
+  position: fixed;
+  bottom: 2em;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+
+  // Fit content, don't stretch across whole viewport
+  width: max-content;
+
+  // Mildly see-through
+  opacity: 80%;
+  backdrop-filter: blur(5px);
+`;
+
+function ReviewTime({
+  knowledge,
+  quality,
+}: {
+  knowledge: Knowledge;
+  quality: ReviewQuality;
+}) {
+  const { interval } = processRepetition(knowledge, quality, 0);
+
+  return <small>{interval.humanize()}</small>;
+}
+
+/**
+ * A floating reviewing overlay used on the review page.
+ */
 export default function ReviewOverlay({
   currentCard,
   onReveal,
   onFeedback,
 }: {
-  currentCard: Card;
+  currentCard: Card | undefined;
   onReveal: () => void;
   onFeedback: (quality: ReviewQuality) => void;
 }) {
-  const [answerShown, setAnswerShown] = useState(false);
-  function showAnswer() {
-    setAnswerShown(true);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
+  function revealAnswer() {
+    setAnswerRevealed(true);
     onReveal();
   }
 
+  // Un-reveal answer if card changes
   useEffect(() => {
-    setAnswerShown(false);
+    setAnswerRevealed(false);
   }, [currentCard]);
 
+  // Listen for keypresses Anki-style
   useEffect(() => {
     function handler(e: KeyboardEvent) {
       if (e.key === " ") {
-        showAnswer();
-      } else if (answerShown) {
+        revealAnswer();
+      } else if (answerRevealed) {
         switch (e.key) {
           case "1":
             onFeedback(ReviewQuality.AGAIN);
@@ -43,51 +78,82 @@ export default function ReviewOverlay({
       }
     }
 
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [answerShown]);
+    if (currentCard !== undefined) {
+      document.addEventListener("keydown", handler);
+      return () => document.removeEventListener("keydown", handler);
+    }
+  }, [currentCard, answerRevealed]);
 
   return (
-    <div className="card">
-      <div className="card-body text-center">
-        {!answerShown && (
-          <p>
-            <button className="btn btn-secondary" onClick={() => showAnswer()}>
-              Show Answer
-            </button>
-          </p>
-        )}
-        {answerShown && (
-          <>
-            <div className="btn-group">
+    <FloatingCard className="card">
+      {currentCard === undefined ? (
+        <div className="card-body">
+          <strong>There are no more cards to review!</strong>
+        </div>
+      ) : (
+        <div className="card-body text-center">
+          {!answerRevealed && (
+            <p>
               <button
-                className="btn btn-danger"
-                onClick={() => onFeedback(ReviewQuality.AGAIN)}
+                className="btn btn-secondary"
+                onClick={() => revealAnswer()}
               >
-                Again
+                Show Answer
               </button>
-              <button
-                className="btn btn-warning"
-                onClick={() => onFeedback(ReviewQuality.HARD)}
-              >
-                Hard
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => onFeedback(ReviewQuality.GOOD)}
-              >
-                Good
-              </button>
-              <button
-                className="btn btn-success"
-                onClick={() => onFeedback(ReviewQuality.EASY)}
-              >
-                Easy
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+            </p>
+          )}
+          {answerRevealed && (
+            <>
+              <div className="btn-group">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => onFeedback(ReviewQuality.AGAIN)}
+                >
+                  Again
+                  <br />
+                  <ReviewTime
+                    knowledge={currentCard.knowledge}
+                    quality={ReviewQuality.AGAIN}
+                  />
+                </button>
+                <button
+                  className="btn btn-warning"
+                  onClick={() => onFeedback(ReviewQuality.HARD)}
+                >
+                  Hard
+                  <br />
+                  <ReviewTime
+                    knowledge={currentCard.knowledge}
+                    quality={ReviewQuality.HARD}
+                  />
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => onFeedback(ReviewQuality.GOOD)}
+                >
+                  Good
+                  <br />
+                  <ReviewTime
+                    knowledge={currentCard.knowledge}
+                    quality={ReviewQuality.GOOD}
+                  />
+                </button>
+                <button
+                  className="btn btn-success"
+                  onClick={() => onFeedback(ReviewQuality.EASY)}
+                >
+                  Easy
+                  <br />
+                  <ReviewTime
+                    knowledge={currentCard.knowledge}
+                    quality={ReviewQuality.EASY}
+                  />
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+    </FloatingCard>
   );
 }

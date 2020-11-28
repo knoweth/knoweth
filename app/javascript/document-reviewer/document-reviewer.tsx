@@ -117,27 +117,21 @@ export default function DocumentReviewer({
     // changes.
     <>
       <ReviewSaver cards={cards} documentId={documentId} />
-      {currentCard !== undefined && (
-        <ReviewOverlay
-          currentCard={currentCard}
-          key={currentCard.cardId}
-          onReveal={() => {
-            setIsHidingCard(false);
-          }}
-          onFeedback={(q) => {
-            console.log("Dispatching review: ", currentCard);
-            dispatch({
-              type: "review",
-              payload: { quality: q, cardId: currentCard.cardId },
-            });
-            setIsHidingCard(true);
-          }}
-        />
-      )}
-      {currentCard === undefined && (
-        // We reviewed the whole thing!
-        <p>There are no more cards to review!</p>
-      )}
+      <ReviewOverlay
+        currentCard={currentCard}
+        key={currentCard?.cardId}
+        onReveal={() => {
+          setIsHidingCard(false);
+        }}
+        onFeedback={(q) => {
+          console.log("Dispatching review: ", currentCard);
+          dispatch({
+            type: "review",
+            payload: { quality: q, cardId: currentCard.cardId },
+          });
+          setIsHidingCard(true);
+        }}
+      />
 
       <SlateEditor interactive={false} value={content} />
     </>
