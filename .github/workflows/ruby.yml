@@ -46,5 +46,7 @@ jobs:
       - name: Install packages
         run: |
           yarn install --pure-lockfile
+      - name: Compile webpack
+        run: bin/rails webpacker:compile
       - name: Run tests
         run: bin/rails test
