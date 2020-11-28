@@ -45,18 +45,18 @@ class DocumentsController < ApplicationController
           ]
         },
         {
-          "type": "q-table",
+          "type": "table",
           "children": [
             {
-              "type": "q-note",
+              "type": "tr",
               "children": [
                 {
-                  "type": "q-cell",
-                  "children": [{ "text": "test" }]
+                  "type": "td",
+                  "children": [{ "text": "Question", "bold": true }]
                 },
                 {
-                  "type": "q-cell",
-                  "children": [{ "text": "test" }]
+                  "type": "td",
+                  "children": [{ "text": "Answer", "bold": true }]
                 }
               ]
             }
