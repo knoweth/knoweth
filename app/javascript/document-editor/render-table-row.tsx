@@ -34,8 +34,9 @@ export function renderTrWithCardId({
       <tr
         className={props.element.cardId !== undefined ? "bg-warning" : ""}
         title={
-          props.element.cardId !== undefined &&
-          `Flashcard ID: ${props.element.cardId}`
+          props.element.cardId !== undefined
+            ? `Flashcard ID: ${props.element.cardId}`
+            : undefined
         }
         {...attributes}
         {...props}
