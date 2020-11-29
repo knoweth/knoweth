@@ -113,10 +113,10 @@ export default function DocumentReviewer({
   }, [content]);
 
   return (
-    // A note: review saver should always exist so that it can push the latest
-    // changes.
     <>
-      <ReviewSaver cards={cards} documentId={documentId} />
+      <p>
+        <ReviewSaver cards={cards} documentId={documentId} />
+      </p>
       <ReviewOverlay
         currentCard={currentCard}
         key={currentCard?.cardId}
