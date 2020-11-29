@@ -20,13 +20,15 @@ import $ from "jquery";
 import "popper.js";
 import "bootstrap";
 
-// Remember when user has closed the alpha alert
-$(function () {
-  const ALERT_KEY = "alert-alpha";
-  const showAlert = localStorage.getItem(ALERT_KEY) === null;
-  $(".alert").toggleClass("d-none", !showAlert);
-  $(".close").on("click", function () {
-    localStorage.setItem(ALERT_KEY, "seen");
-    $(this).closest(".alert").addClass("d-none");
+document.addEventListener("turbolinks:load", () => {
+  // Remember when user has closed the alpha alert
+  $(function () {
+    const ALERT_KEY = "alert-alpha";
+    const showAlert = localStorage.getItem(ALERT_KEY) === null;
+    $(".alert").toggleClass("d-none", !showAlert);
+    $(".close").on("click", function () {
+      localStorage.setItem(ALERT_KEY, "seen");
+      $(this).closest(".alert").addClass("d-none");
+    });
   });
 });
