@@ -9,14 +9,12 @@ const root = document.getElementById("document-reviewer");
 const docContent = JSON.parse(root.dataset.documentContent);
 const documentId = +root.dataset.documentId;
 // Here, we will parse the knowledge from rails into a more amenable mapping
-const priorKnowledgeFromRails = JSON.parse(
-  root.dataset.priorKnowledge
-);
+const priorKnowledgeFromRails = JSON.parse(root.dataset.priorKnowledge);
 const priorKnowledge = new Map<string, Knowledge>();
 
 for (const k of priorKnowledgeFromRails) {
   priorKnowledge.set(k.card_id, {
-    easeFactor: k.easeFactor,
+    easeFactor: +k.ease_factor,
     interval: moment.duration(k.interval_s, "seconds"),
     learningStep: k.learning_step,
     repetitions: k.repetitions,

@@ -26,11 +26,11 @@ export default function ReviewSaver({
             document_id: documentId,
             // Plus is required here because in rails, this is stored as a
             // decimal, which when serialized becomes a string.
-            ease_factor: +c.knowledge.easeFactor,
+            ease_factor: c.knowledge.easeFactor,
             interval_s: c.knowledge.interval.asSeconds(),
             learning_step: c.knowledge.learningStep,
             repetitions: c.knowledge.repetitions,
-            last_review: c.knowledge.lastReview
+            last_review: c.knowledge.lastReview,
           })),
         }),
         signal: abortController.signal,
