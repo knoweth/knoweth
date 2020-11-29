@@ -1,1 +1,28 @@
-<p>Index</p>
+<div class="jumbotron">
+  <h1>Welcome to Knoweth</h1>
+  <p class="lead">
+    An <em>effective</em> note-taking app. Combines the best of two-column
+    notes and <a href="https://en.wikipedia.org/wiki/Spaced_repetition">
+    spaced repetition</a>.
+  </p>
+  <p>
+    <%= link_to "Get started", new_user_registration_path, :class => "btn btn-primary" %>
+    <%= link_to "Login", new_user_session_path, :class => "btn btn-success" %>
+  </p>
+</div>
+<h2>Features</h2>
+<ul>
+  <li>Rich-text support: bold, italics, headings, and more</li>
+  <li>An Anki-like <strong>spaced repetition algorithm</strong></li>
+  <li>Contextual reviewing that <strong>shows you nearby information</strong>, so you can build spatial relationships with your material</li>
+  <li>Cloud note storage, letting you easily edit and review on different devices (no sync conflicts involved)</li>
+  <li><a href="https://github.com/knoweth/knoweth">Open-source and self-hostable</a></li>
+</ul>
+<h2>Coming Soon</h2>
+<ul>
+  <li>Collaborative editing: take notes <strong>simultaneously</strong> with a partner, but review them individually</li>
+  <li>More advanced rich text editor controls</li>
+  <li>Math support with <a href="https://katex.org/">KaTeX</a></li>
+</ul>
+<h2>About</h2>
+<p>Knoweth is made by <a href="https://kliu.io">Kevin Liu</a>. Released as free software under AGPL-3.0.</p>

@@ -17,7 +17,7 @@ class DocumentsController < ApplicationController
     # Only redirect when an update is done if it was called from a form (non-
     # json output requested)
     respond_to do |format|
-      format.json {}
+      format.json { }
       format.html {
         redirect_to document_url(@document)
       }
@@ -79,16 +79,17 @@ class DocumentsController < ApplicationController
   end
 
   private
-    def document_params
-      params.require(:document).permit(:title, :content)
-    end
 
-    def current_document_with_user_validation
-      @document = Document.find(params[:id])
+  def document_params
+    params.require(:document).permit(:title, :content)
+  end
 
-      if @document.user != current_user
-        flash[:alert] = "Can't access a document you don't own."
-        redirect_to document_path
-      end
+  def current_document_with_user_validation
+    @document = Document.find(params[:id])
+
+    if @document.user != current_user
+      flash[:alert] = "Can't access a document you don't own."
+      redirect_to document_path
     end
+  end
 end
