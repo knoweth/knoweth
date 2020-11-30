@@ -34,6 +34,12 @@
       </div>
 
     </nav>
+
+    <% if browser.device.mobile? %>
+      <div class="alert alert-danger" role="alert">
+        Knoweth is not supported (for now) on mobile devices. For the best experience, please use a desktop browser to review.
+      </div>
+    <% end %>
     
     <div class="alert alert-warning alert-dismissible fade show d-none" role="alert">
       <strong>Knoweth is alpha software</strong>.
