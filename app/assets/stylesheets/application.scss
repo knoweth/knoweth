@@ -16,12 +16,12 @@
  *= require rails_bootstrap_forms
  */
 
-/*! `Custom` Bootstrap 4 theme */ /*! `Herbie` Bootstrap 4 theme */
+/*! `Custom` Bootstrap 4 theme */
 @import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
-@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,400,700);
-$font-family-base: Nunito;
-@import url(https://fonts.googleapis.com/css?family=Crete+Round:200,300,400,700);
-$headings-font-family: Crete Round;
+@import url("https://fonts.googleapis.com/css?family=Open Sans:200,300,400,700");
+$font-family-base: Open Sans;
+@import url("https://fonts.googleapis.com/css?family=Noto Serif:200,300,400,700");
+$headings-font-family: Noto Serif;
 
 $primary: #083358;
 $secondary: #f67280;
@@ -31,6 +31,9 @@ $info: #74dbef;
 $warning: #fc3c3c;
 $light: #f2f2f0;
 $dark: #072247;
+$spacer: 1rem;
+$border-width: 3px;
+$btn-border-radius: 0;
 @import "bootstrap/scss/bootstrap.scss";
 
 // Add SASS theme customizations here..
