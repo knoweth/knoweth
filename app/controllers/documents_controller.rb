@@ -35,28 +35,37 @@ class DocumentsController < ApplicationController
     @document = Document.new(document_params)
     @document.user_id = current_user.id
     # Initial document content here
+    # The document has to have a single top-level node that holds all the other
+    # content elements, because otherwise stuff like ExitBreakPlugin breaks
+    # since it assumes all the root elements are at level 1, not 0
+    # see https://github.com/udecode/slate-plugins/blob/next/stories/config/initialValues.ts
+    # and https://github.com/udecode/slate-plugins/blob/add7ec377ffd55387328eee71902b77d7c0e8407/packages/slate-plugins/src/handlers/exit-break/onKeyDownExitBreak.ts#L69
     @document.content = '[
         {
-          "type": "h1",
           "children": [
             {
-              "text": "Test Question"
-            }
-          ]
-        },
-        {
-          "type": "table",
-          "children": [
-            {
-              "type": "tr",
+              "type": "h1",
               "children": [
                 {
-                  "type": "td",
-                  "children": [{ "text": "Question", "bold": true }]
-                },
+                  "text": "Test Question"
+                }
+              ]
+            },
+            {
+              "type": "table",
+              "children": [
                 {
-                  "type": "td",
-                  "children": [{ "text": "Answer", "bold": true }]
+                  "type": "tr",
+                  "children": [
+                    {
+                      "type": "td",
+                      "children": [{ "text": "Question", "bold": true }]
+                    },
+                    {
+                      "type": "td",
+                      "children": [{ "text": "Answer", "bold": true }]
+                    }
+                  ]
                 }
               ]
             }

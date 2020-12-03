@@ -1,5 +1,5 @@
 // Import React dependencies.
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 // Import the Slate editor factory.
 import { createEditor, Node, Editor, Transforms } from "slate";
 
@@ -143,14 +143,7 @@ const plugins = [
         query: {
           start: true,
           end: true,
-          allow: [
-            ELEMENT_H1,
-            ELEMENT_H2,
-            ELEMENT_H3,
-            ELEMENT_H4,
-            ELEMENT_H5,
-            ELEMENT_H6,
-          ],
+          allow: [ELEMENT_H1],
         },
       },
     ],

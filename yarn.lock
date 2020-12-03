@@ -1471,10 +1471,18 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@26.x", "@types/jest@^26.0.15":
+"@types/jest@26.x":
   version "26.0.15"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.15.tgz#12e02c0372ad0548e07b9f4e19132b834cb1effe"
   integrity sha512-s2VMReFXRg9XXxV+CW9e5Nz8fH2K1aEhwgjUqPPbQd7g95T0laAcvLv032EhFHIa5GHsZ8W7iJEQVaJq6k3Gog==
+  dependencies:
+    jest-diff "^26.0.0"
+    pretty-format "^26.0.0"
+
+"@types/jest@^26.0.16":
+  version "26.0.16"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.16.tgz#b47abd50f6ed0503f589db8e126fc8eb470cf87c"
+  integrity sha512-Gp12+7tmKCgv9JjtltxUXokohCAEZfpJaEW5tn871SGRp8I+bRWBonQO7vW5NHwnAHe5dd50+Q4zyKuN35i09g==
   dependencies:
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
@@ -1603,19 +1611,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@udecode/slate-plugins-core@^0.71.0":
-  version "0.71.0"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.71.0.tgz#2110d5555246804d31ea0e8bff9e8ec13a1596b3"
-  integrity sha512-KTky/rZjRV5hpQ1tfoa9h9LakaWPD6JQRDXAHdvGuC8P2c2+VetqhzhiyiRUFpR6X20qOtavDMnwh8gBEUT7tQ==
+"@udecode/slate-plugins-core@^0.71.2":
+  version "0.71.2"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.71.2.tgz#6b814d22c5d1fec7a39eee02825072d80f7a76e8"
+  integrity sha512-WSjFaOW7xaIcS5nRs2JXQt3ZQ74vAvgmmFSKVr4VilPilLua9Uz1soL92elLugdRlxsf/SVh50qKgj0LxSAY5A==
 
-"@udecode/slate-plugins@^0.71.0":
-  version "0.71.0"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.71.0.tgz#7bbe808e784a5d1ef0bc29ac7d0c860a676859f4"
-  integrity sha512-wPr6GDqqURA2H/JNwGgu/mkDDVu+QE+c1eORagCOWFH657O4xOQlzNyUjw1/Xyr/epIsDg7RTK6DN7sfNoESkg==
+"@udecode/slate-plugins@^0.71.2":
+  version "0.71.2"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.71.2.tgz#74dd7fb84f96b2a046bbc1d01427862d0b009ae6"
+  integrity sha512-9Aug62Ngoq+bczaFXA88XGADz+VFxxWPvmjmDkhi28gAA8Pv6+0sCl4HdqnnOqw9PG6W70QTuVwKfdLyaHv2Pw==
   dependencies:
     "@react-hook/merged-ref" "^1.3.0"
     "@tippyjs/react" "^4.0.2"
-    "@udecode/slate-plugins-core" "^0.71.0"
+    "@udecode/slate-plugins-core" "^0.71.2"
     "@uifabric/styling" "^7.12.11"
     "@uifabric/utilities" "^7.19.0"
     image-extensions "^1.1.0"
