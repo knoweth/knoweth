@@ -69,3 +69,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 gem "browser", "~> 5.1"
+
+gem "bootstrap_form", "~> 4.5"
