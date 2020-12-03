@@ -63,7 +63,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set the host for Action Mailer
-  config.action_mailer.default_url_options = { host: "knoweth.co" }
+  config.action_mailer.default_url_options = { host: "knoweth.ml" }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
