@@ -1,6 +1,6 @@
 # Knoweth - Two Column Reviewing Made Easy
 
-An Anki-like two column reviewing and rich document editing application.
+An Anki-like two column reviewing / rich document editing application.
 
 ## Development
 
