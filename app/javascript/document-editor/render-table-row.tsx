@@ -1,6 +1,5 @@
 import { ELEMENT_TD, ELEMENT_TR } from "@udecode/slate-plugins";
 import { RenderElementProps } from "slate-react";
-import styled, { css } from "styled-components";
 import React from "react";
 
 export function NoteCell({
@@ -32,7 +31,7 @@ export function renderTrWithCardId({
   if (props.element.type === ELEMENT_TR) {
     return (
       <tr
-        className={props.element.cardId !== undefined ? "bg-warning" : ""}
+        className={props.element.cardId !== undefined ? "bg-secondary" : ""}
         title={
           props.element.cardId !== undefined
             ? `Flashcard ID: ${props.element.cardId}`
