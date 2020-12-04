@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @documents = Document.where(user_id: current_user.id)
+    @documents = Document.where(user: current_user)
   end
 
   def show
@@ -33,7 +33,7 @@ class DocumentsController < ApplicationController
 
   def create
     @document = Document.new(document_params)
-    @document.user_id = current_user.id
+    @document.user = current_user
     # Initial document content here
     # The document has to have a single top-level node that holds all the other
     # content elements, because otherwise stuff like ExitBreakPlugin breaks
