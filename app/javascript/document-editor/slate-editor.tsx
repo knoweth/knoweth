@@ -39,6 +39,12 @@ import {
   ToolbarTable,
   UnderlinePlugin,
   withTable,
+  ListPlugin,
+  ELEMENT_UL,
+  ELEMENT_LI,
+  ToolbarList,
+  withList,
+  CodePlugin,
 } from "@udecode/slate-plugins";
 import {
   FormatBold,
@@ -55,6 +61,8 @@ import {
   LooksOne,
   LooksTwo,
   Payments,
+  FormatListNumbered,
+  FormatListBulleted,
 } from "@styled-icons/material";
 import { renderTdWithOcclusion, renderTrWithCardId } from "./render-table-row";
 import { onKeyDownTable, renderTable } from "./render-table";
@@ -149,8 +157,9 @@ const plugins = [
     ],
   }),
   TablePlugin(),
+  ListPlugin(),
 ];
-const withPlugins = [withReact, withHistory, withTable()] as const;
+const withPlugins = [withReact, withHistory, withTable(), withList()] as const;
 
 export default function SlateEditor({
   interactive,
@@ -184,6 +193,14 @@ export default function SlateEditor({
               <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
               <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
               <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
+              <ToolbarList
+                typeList={ELEMENT_UL}
+                icon={<FormatListBulleted />}
+              />
+              <ToolbarList
+                typeList={ELEMENT_LI}
+                icon={<FormatListNumbered />}
+              />
               <ToolbarTable icon={<BorderAll />} transform={insertTable} />
               <ToolbarTable icon={<BorderBottom />} transform={addRow} />
               <ToolbarTable icon={<BorderTop />} transform={deleteRow} />
