@@ -8,6 +8,13 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Checkout everything, including tags
+      - name: Set git version
+        id: version
+        run: echo "::set-output name=version::$(git describe --tags)"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -23,5 +30,8 @@ jobs:
         with:
           push: true
           tags: pneumaticat/knoweth:latest
+          build-args: |
+            IMAGE_VERSION=${{ steps.version.outputs.version }}
+            IMAGE_REVISION=${{ github.sha }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
