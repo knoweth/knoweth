@@ -68,5 +68,12 @@
       <% end %>
       <%= yield %>
     </main>
+
+    <footer class="footer">
+      <div class="container text-muted pt-4">
+        <p>&copy; 2020 Kevin Liu</p>
+        <p>Knoweth <%= link_to Git::VERSION, "https://github.com/knoweth/knoweth/commit/#{Git::REVISION}" %>, env: <%= Rails.env %></p>
+      </div>
+    </footer>
   </body>
 </html>
