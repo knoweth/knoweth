@@ -11,6 +11,8 @@ COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
+RUN git describe --tags > VERSION
+RUN git rev-parse --short HEAD > REVISION
 
 RUN RAILS_ENV=production SECRET_KEY_BASE=precompile_placeholder bundle exec rake assets:precompile
 
