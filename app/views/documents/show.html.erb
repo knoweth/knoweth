@@ -1,3 +1,11 @@
+<% content_for :head do %>
+    <%
+      # Disable Turbolinks caching to ensure that it doesn't reload stale
+      # data e.g. if the user presses the back button
+    %>
+    <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+
 <h1><%= @document.title %>
     <%= link_to 'Rename',
         { controller: "documents", action: "rename", id: @document.id },

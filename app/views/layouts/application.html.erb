@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= favicon_link_tag asset_path("icon.svg") %>
 
+    <% if content_for?(:head) %>
+      <%= yield(:head) %>
+    <% end %>
+
     <title>Knoweth</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
