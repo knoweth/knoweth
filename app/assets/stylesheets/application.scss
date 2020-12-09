@@ -39,6 +39,13 @@ $btn-border-radius: 0;
 // Add SASS theme customizations here..
 
 // Custom footer styling
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 8em; /* Margin bottom by footer height */
+}
 .footer {
   position: absolute;
   bottom: 0;
