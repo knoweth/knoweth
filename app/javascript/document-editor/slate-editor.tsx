@@ -45,6 +45,10 @@ import {
   ToolbarList,
   withList,
   CodePlugin,
+  withInlineVoid,
+  ELEMENT_OL,
+  ToolbarImage,
+  ToolbarButton,
 } from "@udecode/slate-plugins";
 import {
   FormatBold,
@@ -63,11 +67,15 @@ import {
   Payments,
   FormatListNumbered,
   FormatListBulleted,
+  Equalizer,
 } from "@styled-icons/material";
 import { renderTdWithOcclusion, renderTrWithCardId } from "./render-table-row";
 import { onKeyDownTable, renderTable } from "./render-table";
 import PaperContainer from "./paper-container";
 import styled from "styled-components";
+import { KATEX_EDITABLE_VOID } from "./katex/type";
+import KatexEditableVoidPlugin from "./katex/katex-editable-void-plugin";
+import { promptFormula } from "./katex/katex-void-element";
 
 const StickyFormattingControls = styled.div`
   // Stick to the top of the viewport when scrolling past
@@ -158,8 +166,18 @@ const plugins = [
   }),
   TablePlugin(),
   ListPlugin(),
+  KatexEditableVoidPlugin(),
 ];
-const withPlugins = [withReact, withHistory, withTable(), withList()] as const;
+const withPlugins = [
+  withReact,
+  withHistory,
+  withTable(),
+  withList(),
+  // Mark all inline/void types specified by plugins as such
+  withInlineVoid({
+    plugins,
+  }),
+] as const;
 
 export default function SlateEditor({
   interactive,
@@ -190,6 +208,17 @@ export default function SlateEditor({
               <ToolbarElement type={ELEMENT_H4} icon={<Looks4 />} />
               <ToolbarElement type={ELEMENT_H5} icon={<Looks5 />} />
               <ToolbarElement type={ELEMENT_H6} icon={<Looks6 />} />
+              <ToolbarButton
+                onMouseDown={() => {
+                  const formula = promptFormula();
+                  editor.insertNode({
+                    type: KATEX_EDITABLE_VOID,
+                    formula,
+                    children: [{ text: "" }],
+                  });
+                }}
+                icon={<Equalizer />}
+              />
               <ToolbarMark type={MARK_BOLD} icon={<FormatBold />} />
               <ToolbarMark type={MARK_ITALIC} icon={<FormatItalic />} />
               <ToolbarMark type={MARK_UNDERLINE} icon={<FormatUnderlined />} />
@@ -198,7 +227,7 @@ export default function SlateEditor({
                 icon={<FormatListBulleted />}
               />
               <ToolbarList
-                typeList={ELEMENT_LI}
+                typeList={ELEMENT_OL}
                 icon={<FormatListNumbered />}
               />
               <ToolbarTable icon={<BorderAll />} transform={insertTable} />
