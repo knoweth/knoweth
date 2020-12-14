@@ -29,6 +29,8 @@ jobs:
       - name: Install packages
         run: |
           yarn install
+      - name: Precompile web assets # to avoid timeouts
+        run: env RAILS_ENV=test bin/rails webpacker:compile
       - name: Run tests
         run: bin/rails test
   test-system:
@@ -53,6 +55,6 @@ jobs:
         run: |
           yarn install
       - name: Precompile web assets # to avoid timeouts
-        run: env RAILS_ENV=test bin/rails assets:precompile
+        run: env RAILS_ENV=test bin/rails webpacker:compile
       - name: Run tests
         run: bin/rails test:system

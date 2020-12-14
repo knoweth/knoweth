@@ -5,8 +5,10 @@ ARG IMAGE_VERSION
 ENV IMAGE_REVISION=$IMAGE_REVISION
 ENV IMAGE_VERSION=$IMAGE_VERSION
 
-RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
-RUN npm install -g yarn
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get update -qq && \
+    apt-get install -y nodejs postgresql-client && \
+    npm install -g yarn
 RUN mkdir /app
 WORKDIR /app
 
