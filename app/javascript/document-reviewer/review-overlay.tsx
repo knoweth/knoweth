@@ -59,19 +59,24 @@ export default function ReviewOverlay({
   useEffect(() => {
     function handler(e: KeyboardEvent) {
       if (e.key === " ") {
+        e.preventDefault();
         revealAnswer();
       } else if (answerRevealed) {
         switch (e.key) {
           case "1":
+            e.preventDefault();
             onFeedback(ReviewQuality.AGAIN);
             break;
           case "2":
+            e.preventDefault();
             onFeedback(ReviewQuality.HARD);
             break;
           case "3":
+            e.preventDefault();
             onFeedback(ReviewQuality.GOOD);
             break;
           case "4":
+            e.preventDefault();
             onFeedback(ReviewQuality.EASY);
             break;
         }

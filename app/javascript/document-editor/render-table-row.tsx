@@ -11,13 +11,16 @@ export function NoteCell({
 }) {
   if (hidden) {
     return (
-      <td className="p-3 text-muted bg-light user-select-none text-center">
+      <td
+        data-cell-hidden="true"
+        className="p-3 text-muted bg-light user-select-none text-center"
+      >
         Answer hidden
       </td>
     );
   }
 
-  return <td>{children}</td>;
+  return <td data-cell-hidden="false">{children}</td>;
 }
 
 /**
@@ -56,7 +59,6 @@ export function renderTdWithOcclusion({
       <NoteCell
         hidden={props.element.hidden == true}
         // Used for auto-scrolling behavior (document scrolls to hidden cell in reviewer)
-        data-cell-hidden={props.element.hidden == true}
         children={props.children}
       />
     );
