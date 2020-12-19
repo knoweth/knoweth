@@ -2,7 +2,7 @@ import { processRepetition, shouldReviewToday } from "../algorithm/anki";
 import ReviewQuality from "../algorithm/review-quality";
 import Knowledge from "../data/knowledge";
 import { shuffle } from "lodash";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import { Node, Path } from "slate";
 import parseDocument, { Card, getCells } from "./card-parser";
 import moment from "moment";
@@ -84,8 +84,13 @@ export default function DocumentReviewer({
     parseDocument(docContent, priorKnowledge)
   );
 
-  const reviewableCards = cards.filter((card) =>
-    shouldReviewToday(moment(), card.knowledge)
+  // Reshuffle every time the number of reviewable cards changes
+  const reviewableCards = useMemo(
+    () =>
+      shuffle(
+        cards.filter((card) => shouldReviewToday(moment(), card.knowledge))
+      ),
+    [cards]
   );
 
   const currentCard = reviewableCards[0];

@@ -18,6 +18,9 @@ const FloatingCard = styled.div`
   // Mildly see-through
   opacity: 80%;
   backdrop-filter: blur(5px);
+
+  // Show above everything
+  z-index: 1;
 `;
 
 function ReviewTime({
