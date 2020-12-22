@@ -1617,19 +1617,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@udecode/slate-plugins-core@^0.71.7":
-  version "0.71.7"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.71.7.tgz#8cc8a07afa5a7986fe2507a783defd1e34f2cf60"
-  integrity sha512-6z6t+Yv1xz+DlLahfM8DrOoF9gmO474Rih66lqI6OIt1xKmMxiJoNqRIysNQFVidNtrLJCUOj2OU7mLe5vJwfw==
+"@udecode/slate-plugins-core@^0.71.8":
+  version "0.71.8"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.71.8.tgz#13f5476de09c116d629265e301a9b91f72d54552"
+  integrity sha512-leyO10m+03OLihiwHMkGsdCbIfwhnkLpTrKxVq63zFCVHxaTbqmETCwRXyEAwCWjWlQth7K2QwVx1UR9NFsvsA==
 
-"@udecode/slate-plugins@^0.71.7":
-  version "0.71.7"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.71.7.tgz#4fc5d6ebeb1f2204d1d35f3b77390724ff1b6ac1"
-  integrity sha512-K+glPiAIMGEjuH6kVxN+1iT6NRWcw0LRD8g0OU4BMsKPsAoKNH1TE4EbHBAUie09voHbnKwT14TcbqO/yoIqLw==
+"@udecode/slate-plugins@^0.71.8":
+  version "0.71.8"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.71.8.tgz#52fb03c751536ef8fd6be205af58cefe8bf46fac"
+  integrity sha512-INj14jaRT4itpg6+vglSQHgzR7RPnkE9mJT4Yq6JLQxwE0lVI3soXUWU6ITIFc6ef1I3xIPK29WPi/TlkZUKww==
   dependencies:
     "@react-hook/merged-ref" "^1.3.0"
     "@tippyjs/react" "^4.0.2"
-    "@udecode/slate-plugins-core" "^0.71.7"
+    "@udecode/slate-plugins-core" "^0.71.8"
     "@uifabric/styling" "^7.12.11"
     "@uifabric/utilities" "^7.19.0"
     image-extensions "^1.1.0"
