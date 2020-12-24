@@ -11,7 +11,7 @@
     "@rails/webpacker": "5.2.1",
     "@styled-icons/boxicons-regular": "^10.18.0",
     "@styled-icons/material": "^10.18.0",
-    "@types/lodash": "^4.14.165",
+    "@types/lodash": "^4.14.166",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/styled-components": "^5.1.6",
