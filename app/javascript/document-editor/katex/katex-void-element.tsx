@@ -25,6 +25,11 @@ export default function KatexVoidElement({
         // Ask for a new formula
         const newFormula = promptFormula(formula);
 
+        if (newFormula === null) {
+          // Don't set an empty formula
+          return;
+        }
+
         // Find this math element's path in the tree
         const [match] = Editor.nodes(editor, {
           match: (n) => n === element,
