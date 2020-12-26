@@ -83,7 +83,7 @@ const StickyFormattingControls = styled.div`
   top: 0;
 
   * {
-    background-color: white;
+    background-color: inherit;
   }
 `;
 
@@ -200,7 +200,7 @@ export default function SlateEditor({
             <ToolbarTable transform={toggleFlashcard} icon={<Payments />} />
           </BalloonToolbar>
 
-          <StickyFormattingControls>
+          <StickyFormattingControls className="bg-gray-50">
             <HeadingToolbar>
               <ToolbarElement type={ELEMENT_H1} icon={<LooksOne />} />
               <ToolbarElement type={ELEMENT_H2} icon={<LooksTwo />} />

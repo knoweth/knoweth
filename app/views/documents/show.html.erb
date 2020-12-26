@@ -6,15 +6,17 @@
     <meta name="turbolinks-cache-control" content="no-cache">
 <% end %>
 
-<h1><%= @document.title %>
-    <%= link_to 'Rename',
-        { controller: "documents", action: "rename", id: @document.id },
-        class: "btn btn-sm btn-outline-primary", role: "button" %>
-    <%= link_to 'Review',
-        { controller: "documents", action: "review", id: @document.id },
-        class: "btn btn-sm btn-outline-success", role: "button" %></h1>
+<div class="prose max-w-none">
+    <h1><%= @document.title %>
+        <%= link_to 'Rename',
+            { controller: "documents", action: "rename", id: @document.id },
+            class: "text-xl" %>
+        <%= link_to 'Review',
+            { controller: "documents", action: "review", id: @document.id },
+            class: "text-xl" %></h1>
 
-<% # editor configuration %>
-<article id="document-editor" data-initial-content="<%= @document.content %>"></article>
+    <% # editor configuration %>
+    <article id="document-editor" data-initial-content="<%= @document.content %>"></article>
+</div>
 <%= javascript_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>
 <%= stylesheet_pack_tag 'document-editor', 'data-turbolinks-track': 'reload' %>

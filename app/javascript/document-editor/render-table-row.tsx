@@ -13,7 +13,7 @@ export function NoteCell({
     return (
       <td
         data-cell-hidden="true"
-        className="p-3 text-muted bg-light user-select-none text-center"
+        className="p-3 text-gray-600 bg-gray-200 select-none text-center"
       >
         Answer hidden
       </td>

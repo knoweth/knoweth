@@ -1,12 +1,14 @@
-<h1>New Document</h1>
+<h1 class="text-3xl mb-4">New Document</h1>
 
 <%= form_with scope: :document, url: documents_path, local: true do |form| %>
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
- 
-  <p>
-    <%= form.submit %>
-  </p>
+  <div class="grid grid-cols-1 gap-6">
+    <p>
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+    </p>
+  
+    <p>
+      <%= form.submit 'Submit', :class => "btn btn-blue" %>
+    </p>
+  </div>
 <% end %>

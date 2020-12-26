@@ -3,6 +3,12 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+// Tailwind-used fonts
+import "@fontsource/cormorant-sc";
+import "@fontsource/inter";
+import "@primer/octicons/build/build.css";
+import "./application.css";
+
 require("@rails/ujs").start();
 require("turbolinks").start();
 require("@rails/activestorage").start();
@@ -14,21 +20,3 @@ require("channels");
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-// Bootstrap configuration!
-import $ from "jquery";
-import "popper.js";
-import "bootstrap";
-
-document.addEventListener("turbolinks:load", () => {
-  // Remember when user has closed the alpha alert
-  $(function () {
-    const ALERT_KEY = "alert-alpha";
-    const showAlert = localStorage.getItem(ALERT_KEY) === null;
-    $(".alert").toggleClass("d-none", !showAlert);
-    $(".close").on("click", function () {
-      localStorage.setItem(ALERT_KEY, "seen");
-      $(this).closest(".alert").addClass("d-none");
-    });
-  });
-});

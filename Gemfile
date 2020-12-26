@@ -71,3 +71,5 @@ gem 'devise'
 gem "browser", "~> 5.2"
 
 gem "bootstrap_form", "~> 4.5"
+
+gem "octicons_helper", "~> 11.2"

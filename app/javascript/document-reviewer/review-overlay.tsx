@@ -5,24 +5,6 @@ import ReviewQuality from "../algorithm/review-quality";
 import Knowledge from "../data/knowledge";
 import { Card } from "./card-parser";
 
-const FloatingCard = styled.div`
-  position: fixed;
-  bottom: 2em;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-
-  // Fit content, don't stretch across whole viewport
-  width: max-content;
-
-  // Mildly see-through
-  opacity: 80%;
-  backdrop-filter: blur(5px);
-
-  // Show above everything
-  z-index: 1;
-`;
-
 function ReviewTime({
   knowledge,
   quality,
@@ -93,17 +75,18 @@ export default function ReviewOverlay({
   }, [currentCard, answerRevealed]);
 
   return (
-    <FloatingCard className="card">
+    <div
+      className="fixed bottom-4 right-0 left-0 mx-auto w-max z-10 opacity-80
+                 p-3 bg-gray-300 rounded shadow"
+    >
       {currentCard === undefined ? (
-        <div className="card-body">
-          <strong>There are no more cards to review!</strong>
-        </div>
+        <strong>There are no more cards to review!</strong>
       ) : (
-        <div className="card-body text-center">
+        <div className="text-center">
           {!answerRevealed && (
             <p>
               <button
-                className="btn btn-secondary"
+                className="btn bg-blue-600 text-blue-100"
                 onClick={() => revealAnswer()}
               >
                 Show Answer
@@ -114,7 +97,7 @@ export default function ReviewOverlay({
             <>
               <div className="btn-group">
                 <button
-                  className="btn btn-danger"
+                  className="btn bg-red-700 text-red-100"
                   onClick={() => onFeedback(ReviewQuality.AGAIN)}
                 >
                   Again
@@ -123,9 +106,9 @@ export default function ReviewOverlay({
                     knowledge={currentCard.knowledge}
                     quality={ReviewQuality.AGAIN}
                   />
-                </button>
+                </button>{" "}
                 <button
-                  className="btn btn-warning"
+                  className="btn bg-yellow-700 text-yellow-100"
                   onClick={() => onFeedback(ReviewQuality.HARD)}
                 >
                   Hard
@@ -134,9 +117,9 @@ export default function ReviewOverlay({
                     knowledge={currentCard.knowledge}
                     quality={ReviewQuality.HARD}
                   />
-                </button>
+                </button>{" "}
                 <button
-                  className="btn btn-primary"
+                  className="btn bg-green-700 text-green-100"
                   onClick={() => onFeedback(ReviewQuality.GOOD)}
                 >
                   Good
@@ -145,9 +128,9 @@ export default function ReviewOverlay({
                     knowledge={currentCard.knowledge}
                     quality={ReviewQuality.GOOD}
                   />
-                </button>
+                </button>{" "}
                 <button
-                  className="btn btn-success"
+                  className="btn bg-blue-700 text-blue-100"
                   onClick={() => onFeedback(ReviewQuality.EASY)}
                 >
                   Easy
@@ -162,6 +145,6 @@ export default function ReviewOverlay({
           )}
         </div>
       )}
-    </FloatingCard>
+    </div>
   );
 }
