@@ -1645,19 +1645,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@udecode/slate-plugins-core@^0.71.9":
-  version "0.71.9"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.71.9.tgz#279f7edd20c172f16fc250dec8c9353a2944db22"
-  integrity sha512-ZX03hwawJP/qKKrLDBnGJwjNlFshy5oQuQGCDV9CXBJCt7z8xkjgfBvn2sQEEFINTBUEBU9jbz4qagQfGUdU9Q==
+"@udecode/slate-plugins-core@^0.72.6":
+  version "0.72.6"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins-core/-/slate-plugins-core-0.72.6.tgz#4f8912a010fea55fc1c8d3458fcc5f068ac5abb9"
+  integrity sha512-7f37Z9zSLGdg1AuCpJB8/28g8YT57zSEDyXC9ISEECQm05igxnnvxtLdKKlgYZnkB3VmfeEP9DOX1jt4PrTymw==
 
-"@udecode/slate-plugins@^0.71.9":
-  version "0.71.9"
-  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.71.9.tgz#07ccf5a8d1dcd2e72f02640fb90f0ed2476472ba"
-  integrity sha512-ieB40EkqgpGYTiJH40QPC7eCq5EPnDzBdXBEtj+ua/fyjgeFHHW4oHpaG8pWZyYhSqpRi2QeYthbmWj8eco5FA==
+"@udecode/slate-plugins@^0.72.6":
+  version "0.72.6"
+  resolved "https://registry.yarnpkg.com/@udecode/slate-plugins/-/slate-plugins-0.72.6.tgz#dd89d629d2cde3a925d7597b4d186f3869a2b053"
+  integrity sha512-fCmkl2ingX+TYHnQQhV8jliXbeM5PyEJwx3a2UEWGIBHFP6V0Rg23sKQ1QF0Lwg0Um07CfrNfmPIXm5cVSN4WA==
   dependencies:
     "@react-hook/merged-ref" "^1.3.0"
     "@tippyjs/react" "^4.0.2"
-    "@udecode/slate-plugins-core" "^0.71.9"
+    "@udecode/slate-plugins-core" "^0.72.6"
     "@uifabric/styling" "^7.12.11"
     "@uifabric/utilities" "^7.19.0"
     image-extensions "^1.1.0"
@@ -1668,7 +1668,7 @@
     react-dnd-html5-backend "^11.1.3"
     react-use "^15.1.0"
     remark-parse "^9.0.0"
-    remark-slate "^1.1.1"
+    remark-slate "^1.4.0"
     unified "^9.1.0"
     utility-types "^3.10.0"
 
@@ -8535,10 +8535,10 @@ remark-parse@^9.0.0:
   dependencies:
     mdast-util-from-markdown "^0.8.0"
 
-remark-slate@^1.1.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/remark-slate/-/remark-slate-1.2.2.tgz#86b2487fe5ffdcf2c39072ed29727daa94e8358d"
-  integrity sha512-2m8BVNUypma1PZ5H/XBrh160hndBEXgRSqTTG/DUKEeaZBwBWiYcCCjkDse7PDjIwiRYVALQxhABWA2nbhVXYw==
+remark-slate@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/remark-slate/-/remark-slate-1.4.0.tgz#d546e4eab254d7d896a80c56c7f45e071bc2227b"
+  integrity sha512-L+/rXpb//aVD/O5jNXR663NbNwHMqlIey22FJfSt0uXRE+vfjd8TBomt14glx6TjLwuqwBUbbLm45KLRLb+sog==
   dependencies:
     "@types/escape-html" "^1.0.0"
     escape-html "^1.0.3"
