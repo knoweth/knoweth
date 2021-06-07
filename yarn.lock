@@ -1038,10 +1038,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource/cormorant-sc/-/cormorant-sc-4.0.1.tgz#676b036542eef229af04c1e129c8375916a82bf4"
   integrity sha512-j/HUFfGP8wNtVGz3Q46E8TsQkSX8uSX7fmAqg6m3VuYaVwbvHBBpRaK2gUKLPMjeKX7MPcIu1AU4SoK7558H3g==
 
-"@fontsource/inter@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.0.1.tgz#a7d8d7f50ce53059390ef5a416d44d1bf5368651"
-  integrity sha512-NjH736K+aj/egfrhqAqW3x9y+VdzIrsLYzKIZ1dpZDd2WsUiJ+DJC+TdIjIB1vZ4wmZdlF2VGlbe/ycRh+dpOw==
+"@fontsource/inter@^4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.4.5.tgz#bce26ff9dd83898bd610924cff1342cc30d0e89a"
+  integrity sha512-eRUmB54CbyC3MhAuw2VvTPEc3wy8sFi0/1mVHaC7ZXglXcrSWXY+p8Xad/Zy8AcmS9BuqCCEH2qJbOt9XdX65Q==
 
 "@fullhuman/postcss-purgecss@^3.0.0":
   version "3.1.3"
