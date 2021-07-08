@@ -1033,10 +1033,10 @@
     "@uifabric/utilities" "^7.33.2"
     tslib "^1.10.0"
 
-"@fontsource/cormorant-sc@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@fontsource/cormorant-sc/-/cormorant-sc-4.0.1.tgz#676b036542eef229af04c1e129c8375916a82bf4"
-  integrity sha512-j/HUFfGP8wNtVGz3Q46E8TsQkSX8uSX7fmAqg6m3VuYaVwbvHBBpRaK2gUKLPMjeKX7MPcIu1AU4SoK7558H3g==
+"@fontsource/cormorant-sc@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/cormorant-sc/-/cormorant-sc-4.5.0.tgz#165b57292f1afe59c38b13b60fecf2b3569a1da2"
+  integrity sha512-d8v2HEf63EqLLeCMzBus0cNf/8F+2yyuba06aFT1gAF50GMmSFaprJwYnGUnA0GGUfH1mdBekzQ2rHGeNHoQWg==
 
 "@fontsource/inter@^4.0.1":
   version "4.0.1"
